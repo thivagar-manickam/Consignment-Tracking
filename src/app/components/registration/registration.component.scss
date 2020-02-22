@@ -1,0 +1,25 @@
+.register-container {
+  margin: 5% auto auto 35%;
+  position: fixed;
+  text-align: center;
+  width: 30%;
+  .register-form {
+    min-width: 100px;
+    max-width: 500px;
+    width: 100%;
+    .register-input {
+      width: 100%;
+    }
+  }
+}
+
+.login {
+  text-align: center;
+  padding-top: 0.8em;
+  .login-link {
+    padding-left: 0.5em;
+    a {
+      color: #673ab7 !important;
+    }
+  }
+}

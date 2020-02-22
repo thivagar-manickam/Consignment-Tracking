@@ -1,0 +1,61 @@
+<mat-grid-list cols="3">
+  <div class="register-container">
+    <div class="error-block" color="danger" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    <mat-card>
+      <mat-icon>person</mat-icon>
+      <mat-card-title>Register New User</mat-card-title>
+      <mat-card-content>
+        <form
+          class="register-form"
+          [formGroup]="registerForm"
+          (ngSubmit)="onRegister(registerForm.value)"
+        >
+          <mat-form-field class="register-input">
+            <input
+              matInput
+              type="text"
+              formControlName="username"
+              placeholder="Username"
+              autocomplete="off"
+              autofocus
+              required
+            />
+          </mat-form-field>
+          <mat-form-field class="register-input">
+            <input
+              matInput
+              type="password"
+              formControlName="newPassword"
+              placeholder="New Password"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field class="register-input">
+            <input
+              matInput
+              type="password"
+              formControlName="confirmPassword"
+              placeholder="Confirm Password"
+              required
+            />
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit">
+            Register
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+    <div class="login">
+      <mat-card>
+        <mat-card-content>
+          <p>
+            Already registerd?
+            <span id="login-link"><a href="/login">Login now</a></span>
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</mat-grid-list>
