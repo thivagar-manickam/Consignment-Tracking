@@ -4,24 +4,6 @@
   <div class="error-block" color="danger" *ngIf="errorMessage">
     {{ errorMessage }}
   </div>
-  <div id="file-upload-container" *ngIf="isNewConsignment">
-    <form [formGroup]="fileUpload" (ngSubmit)="onUploadClick()">
-      <mat-card>
-        <input
-          type="file"
-          name="excel_file"
-          formControlName="fileInput"
-          (change)="onFileSelect($event)"
-        />
-        <button mat-raised-button color="primary" class="button" type="submit">
-          Upload File
-        </button>
-      </mat-card>
-    </form>
-  </div>
-  <div id="alternative-text" *ngIf="isNewConsignment">
-    <h3>Or</h3>
-  </div>
   <div id="consigment-number-container" *ngIf="!isNewConsignment">
     <form
       [formGroup]="consignmentNumberForm"

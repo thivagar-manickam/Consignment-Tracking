@@ -7,13 +7,13 @@ import {
   CONSIGNMENT,
   NEW_CONSIGNMENT_TITLE,
   EDIT_CONSIGNMENT_TITLE,
-  CONSIGNMENT_DETAILS
+  CONSIGNMENT_DETAILS,
 } from "../../utils/constants.js";
 
 @Component({
   selector: "app-consignment-details",
   templateUrl: "./consignment-details.component.html",
-  styleUrls: ["./consignment-details.component.scss"]
+  styleUrls: ["./consignment-details.component.scss"],
 })
 export class ConsignmentDetailsComponent implements OnInit {
   screenTitle = "Add New Consignment";
@@ -22,11 +22,11 @@ export class ConsignmentDetailsComponent implements OnInit {
   uploadFile;
 
   consignmentNumberForm = new FormGroup({
-    consignmentNumber: new FormControl("", Validators.required)
+    consignmentNumber: new FormControl("", Validators.required),
   });
 
   fileUpload = new FormGroup({
-    fileInput: new FormControl()
+    fileInput: new FormControl(),
   });
 
   contractForm = new FormGroup({
@@ -56,7 +56,7 @@ export class ConsignmentDetailsComponent implements OnInit {
     eta: new FormControl(),
     placeOfDelivery: new FormControl(""),
     dischargeDate: new FormControl(new Date()),
-    sailingTime: new FormControl("")
+    sailingTime: new FormControl(""),
   });
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
@@ -68,7 +68,7 @@ export class ConsignmentDetailsComponent implements OnInit {
    * @param data
    * @returns void
    */
-  onFormSubmit = data => {
+  onFormSubmit = (data) => {
     console.log(data);
   };
 
@@ -76,46 +76,12 @@ export class ConsignmentDetailsComponent implements OnInit {
    * This method will get the
    * consignement details based on the
    */
-  onRetrieveDetail = data => {
-    CONSIGNMENT_DETAILS.forEach(value => {
+  onRetrieveDetail = (data) => {
+    CONSIGNMENT_DETAILS.forEach((value) => {
       if (value.contractNumber === data.consignmentNumber) {
         this.contractForm.setValue(value);
       }
     });
-  };
-  /**
-   * This method will parse the XLSX
-   * file and convert the column data
-   * in the sheet into a json values
-   * and send it to the Server for
-   * saving the consignment details
-   * @returns void
-   */
-  onUploadClick = () => {
-    let reader = new FileReader();
-
-    reader.onload = event => {
-      if (event.target && event.target.result) {
-        let data = event.target.result || "";
-        let cfb = XLSX.read(data, { type: "binary" });
-        cfb.SheetNames.forEach(sheetname => {
-          let workSheet = XLSX.utils.sheet_to_json(cfb.Sheets[sheetname]);
-          console.log(workSheet);
-          this.fileUpload.reset();
-        });
-      }
-    };
-    if (this.uploadFile) reader.readAsBinaryString(this.uploadFile);
-  };
-
-  /**
-   * This method is to retrive the
-   * file after the file is chosen
-   * @param event
-   * @returns void
-   */
-  onFileSelect = event => {
-    this.uploadFile = event.target.files[0];
   };
 
   ngOnInit() {
