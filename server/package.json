@@ -1,0 +1,36 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server side code for consignment tracking application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thivagar-manickam/consignment_tracking.git"
+  },
+  "keywords": [
+    "Consignment",
+    "tracking",
+    "shipment",
+    "details"
+  ],
+  "author": "M. Thivagar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thivagar-manickam/consignment_tracking/issues"
+  },
+  "homepage": "https://github.com/thivagar-manickam/consignment_tracking#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "crypto-js": "^4.0.0",
+    "express": "^4.17.1",
+    "fs-extra": "^9.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.9.10",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^4.4.2"
+  }
+}
