@@ -2,25 +2,30 @@ import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 
+import { AuthenticationService } from "../../services/authentication/authentication.service";
 import {
   USER_NAME,
   PASSWORD,
-  LOGIN_ERROR_MESSAGE
+  LOGIN_ERROR_MESSAGE,
+  CONSIGNMENT,
 } from "../../utils/constants.js";
 
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"]
+  styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent {
   errorMessage = "";
   loginForm = new FormGroup({
     username: new FormControl("", Validators.required),
-    password: new FormControl("", Validators.required)
+    password: new FormControl("", Validators.required),
   });
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private _authentication: AuthenticationService
+  ) {}
 
   /**
    * This method will get the login details
@@ -30,12 +35,17 @@ export class LoginComponent {
    * @param userData
    * @returns Void
    */
-  onLogin = userData => {
-    if (userData.username === USER_NAME && userData.password === PASSWORD) {
-      this.errorMessage = "";
-      this.router.navigateByUrl("consignment");
-    } else {
-      this.errorMessage = LOGIN_ERROR_MESSAGE;
+  onLogin = (userData) => {
+    if (this.loginForm.dirty && this.loginForm.valid) {
+      this._authentication.onLogin(userData).subscribe((res) => {
+        if (res.success && res.statusCode === 200) {
+          this._authentication.updateUserDetail(res);
+          this.errorMessage = "";
+          this.router.navigateByUrl(CONSIGNMENT);
+        } else {
+          this.errorMessage = LOGIN_ERROR_MESSAGE;
+        }
+      });
     }
   };
 }

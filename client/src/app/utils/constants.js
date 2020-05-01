@@ -1,39 +1,19 @@
-export const USER_NAME = "admin",
-  PASSWORD = "admin",
-  LOGIN_ERROR_MESSAGE = "Invalid username / password",
-  REGISTER_SUCCESS_MESSAGE = "User registered successfully!!!",
-  REGISTER_ERROR_MESSAGE = "New password and Confirm password mismatch",
-  CONSIGNMENT = "consignment",
-  NEW_CONSIGNMENT_TITLE = "Add New Consignment",
-  EDIT_CONSIGNMENT_TITLE = "Update Consignment detail",
-  CONSIGNMENT_DETAILS = [
-    {
-      contractNumber: "12345",
-      contractDate: new Date("01/15/2020"),
-      businessDate: new Date("01/16/2020"),
-      companyName: "ABC",
-      material: "Steel",
-      price: 10000,
-      quantity: 10,
-      paymentTerms: "Cash",
-      advancePaid: 1000,
-      advancePaidDate: new Date("01/17/2020"),
-      contractQuantity: 5,
-      invoiceDate: new Date("01/18/2020"),
-      invoiceNumber: "THU7890",
-      invoiceValue: 10909,
-      shippingQuantity: 10,
-      noOfContainers: 2,
-      containerNumber: "THUIQWE1, THQRQW2",
-      loadingPort: "Chennai",
-      oblDate: new Date("01/19/2020"),
-      oblNumber: "HQRIOWQ",
-      psicDetail: "WRIQDFJAKLS",
-      dhlDetail: "RUWOQI2",
-      shippingLine: "Chennai - Andhaman",
-      eta: 3,
-      placeOfDelivery: "China",
-      dischargeDate: new Date("01/20/2020"),
-      sailingTime: "3"
-    }
-  ];
+export const USER_NAME = "admin";
+export const PASSWORD = "admin";
+export const LOGIN_ERROR_MESSAGE = "Invalid username / password";
+export const REGISTER_SUCCESS_MESSAGE = "User registered successfully!!!";
+export const REGISTER_ERROR_MESSAGE =
+  "New password and Confirm password mismatch";
+export const CONSIGNMENT = "consignment";
+export const NEW_CONSIGNMENT_TITLE = "Add New Consignment";
+export const EDIT_CONSIGNMENT_TITLE = "Update Consignment detail";
+
+export const URL = "URL";
+export const TOKEN = "token";
+export const REQUEST_METHOD = "requestMethod";
+export const OBJ = "obj";
+
+export const BASE_URL = "http://localhost:4200/api";
+export const LOGIN_USER_URL = "login";
+export const REGISTER_USER_URL = "register";
+export const LOGOUT_USER_URL = "logout";

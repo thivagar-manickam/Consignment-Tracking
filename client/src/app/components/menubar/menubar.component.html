@@ -14,4 +14,7 @@
       Logout
     </button>
   </div>
+  <div class="error-block" color="danger" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
 </mat-toolbar>
