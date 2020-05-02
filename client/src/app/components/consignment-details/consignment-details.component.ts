@@ -1,15 +1,10 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import {
-  FormGroup,
-  FormControl,
-  FormBuilder,
-  Validators,
-  FormGroupDirective,
-} from "@angular/forms";
+import { FormBuilder, Validators, FormGroupDirective } from "@angular/forms";
 import { AuthenticationService } from "../../services/authentication/authentication.service";
 import { ConsignmentService } from "../../services/consignment/consignment.service";
 
+import { NgxSpinnerService } from "ngx-spinner";
 import Swal from "sweetalert2";
 
 import {
@@ -22,6 +17,8 @@ import {
   LOGIN_USER_URL,
   OBJ,
   CONSIGNMENT_ID,
+  RETRIEVING_DATA,
+  SAVING_CONSIGNMENT_DETAILS,
 } from "../../utils/constants.js";
 
 @Component({
@@ -37,6 +34,7 @@ export class ConsignmentDetailsComponent implements OnInit {
   isNewConsignment = true;
   userDetails;
   consignmentDetail;
+  spinnerMessage;
 
   consignmentNumberForm = this.consignmentNumberFormBuilder.group({
     consignmentNumber: ["", Validators.required],
@@ -78,7 +76,8 @@ export class ConsignmentDetailsComponent implements OnInit {
     private _authenticationService: AuthenticationService,
     private _consignmentService: ConsignmentService,
     private consignmentFormBuilder: FormBuilder,
-    private consignmentNumberFormBuilder: FormBuilder
+    private consignmentNumberFormBuilder: FormBuilder,
+    private spinnerService: NgxSpinnerService
   ) {}
 
   /**
@@ -96,6 +95,9 @@ export class ConsignmentDetailsComponent implements OnInit {
       request[TOKEN] = this.userDetails.token;
       request[OBJ] = obj;
       let response;
+
+      this.spinnerMessage = RETRIEVING_DATA;
+      this.spinnerService.show();
       if (this.isNewConsignment) {
         response = this._consignmentService.onCreateConsignment(
           request,
@@ -122,6 +124,7 @@ export class ConsignmentDetailsComponent implements OnInit {
         } else {
           this.errorMessage = responseValue.message;
         }
+        this.spinnerService.hide();
       });
     }
   };
@@ -165,6 +168,8 @@ export class ConsignmentDetailsComponent implements OnInit {
       const obj = data.getRawValue();
       obj.consignmentNumber = obj.consignmentNumber.trim();
       request[OBJ] = obj;
+      this.spinnerMessage = RETRIEVING_DATA;
+      this.spinnerService.show();
       this._consignmentService
         .onRetrieveConsignmentDetail(request, IS_ADD_TOKEN)
         .subscribe((res) => {
@@ -188,6 +193,7 @@ export class ConsignmentDetailsComponent implements OnInit {
           } else {
             this.errorMessage = responseValue.message;
           }
+          this.spinnerService.hide();
         });
     }
   };
