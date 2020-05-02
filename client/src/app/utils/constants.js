@@ -15,6 +15,8 @@ export const OBJ = "obj";
 export const USER_ID = "userId";
 export const CONSIGNMENT_ID = "consignmentId";
 
+export const RETRIEVING_DATA = "Retrieving consignment details...";
+export const SAVING_CONSIGNMENT_DETAILS = "Saving the consignment details...";
 export const IS_ADD_TOKEN = true;
 export const BASE_URL = "http://localhost:4200/api";
 export const LOGIN_USER_URL = "login";

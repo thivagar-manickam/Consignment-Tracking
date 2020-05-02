@@ -5,6 +5,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 // UI Files import
 import { LoginComponent } from "./components/login/login.component";
@@ -13,7 +14,7 @@ import { RegistrationComponent } from "./components/registration/registration.co
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { MaterialModule } from "./material";
-import { MenubarComponent } from './components/menubar/menubar.component';
+import { MenubarComponent } from "./components/menubar/menubar.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { MenubarComponent } from './components/menubar/menubar.component';
     LoginComponent,
     ConsignmentDetailsComponent,
     RegistrationComponent,
-    MenubarComponent
+    MenubarComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,9 +30,10 @@ import { MenubarComponent } from './components/menubar/menubar.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    NgxSpinnerModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -10,7 +10,6 @@ import {
   CONSIGNMENT_GET_URL,
   CONSIGNMENT_PUT_URL,
   CONSIGNMENT_POST_URL,
-  USER_ID,
 } from "../../utils/constants.js";
 
 @Injectable({
