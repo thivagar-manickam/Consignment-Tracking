@@ -60,4 +60,55 @@ export class ApiService {
   logoutUser = (req) => {
     return this.httpClient.post(req.URL, req, { headers: this.headers });
   };
+
+  /**
+   * This is a common method to
+   * fetch any data from the server
+   *
+   * @param req
+   * @param isAddToken
+   *
+   * @returns Object
+   */
+  getData = (req, isAddToken) => {
+    if (isAddToken) {
+      this.headers = this.setAuthorizationHeader(req.token, true);
+    }
+    return this.httpClient.get(req.URL, {
+      headers: this.headers,
+      params: { obj: req.obj },
+    });
+  };
+
+  /**
+   * This is a common method to
+   * add / create a new data in
+   * the application
+   *
+   * @param req
+   * @param isAddToken
+   *
+   * @returns Object
+   */
+  postData = (req, isAddToken = false) => {
+    if (isAddToken) {
+      this.headers = this.setAuthorizationHeader(req.token, false);
+    }
+    return this.httpClient.post(req.URL, req, { headers: this.headers });
+  };
+
+  /**
+   * This is a common method to
+   * update the data in the application
+   * @param req
+   * @param isAddToken
+   *
+   * @returns Object
+   */
+  updateData = (req, isAddToken = false) => {
+    if (isAddToken) {
+      this.headers = this.setAuthorizationHeader(req.token, false);
+    }
+    return this.httpClient.put(req.URL, req, { headers: this.headers });
+  };
 }

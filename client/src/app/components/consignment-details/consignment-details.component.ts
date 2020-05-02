@@ -1,13 +1,27 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import * as XLSX from "xlsx";
+import {
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  Validators,
+  FormGroupDirective,
+} from "@angular/forms";
+import { AuthenticationService } from "../../services/authentication/authentication.service";
+import { ConsignmentService } from "../../services/consignment/consignment.service";
+
+import Swal from "sweetalert2";
 
 import {
   CONSIGNMENT,
   NEW_CONSIGNMENT_TITLE,
   EDIT_CONSIGNMENT_TITLE,
-  CONSIGNMENT_DETAILS,
+  USER_ID,
+  TOKEN,
+  IS_ADD_TOKEN,
+  LOGIN_USER_URL,
+  OBJ,
+  CONSIGNMENT_ID,
 } from "../../utils/constants.js";
 
 @Component({
@@ -16,60 +30,127 @@ import {
   styleUrls: ["./consignment-details.component.scss"],
 })
 export class ConsignmentDetailsComponent implements OnInit {
+  @ViewChild(FormGroupDirective, null) form;
+
   screenTitle = "Add New Consignment";
   errorMessage = "";
   isNewConsignment = true;
-  uploadFile;
+  userDetails;
+  consignmentDetail;
 
-  consignmentNumberForm = new FormGroup({
-    consignmentNumber: new FormControl("", Validators.required),
+  consignmentNumberForm = this.consignmentNumberFormBuilder.group({
+    consignmentNumber: ["", Validators.required],
   });
 
-  fileUpload = new FormGroup({
-    fileInput: new FormControl(),
+  contractForm = this.consignmentFormBuilder.group({
+    "Contract Number": ["", Validators.required],
+    "Contract Date": [new Date(), Validators.required],
+    "Business Date": [new Date(), Validators.required],
+    "Company Name": ["", Validators.required],
+    Material: ["", Validators.required],
+    Price: [0, Validators.required],
+    Quantity: [0, Validators.required],
+    "Payment Terms": ["", Validators.required],
+    "Advance To Be Paid": [0],
+    "Advance Paid Date": [],
+    "Contract Quantity (MT)": [0],
+    "Invoice Date": [new Date()],
+    "Invoice Number": [""],
+    "Invoice Price": [],
+    "Shipped Quantity (MT)": [0, Validators.required],
+    Containers: [0, Validators.required],
+    "Container Numbers": [""],
+    "Loading Port": [""],
+    "OB/L Date": [new Date()],
+    "B/L Number": [""],
+    "PSIC Courier Details": [""],
+    "DHL / Delivery Date": [""],
+    "Shipping Line": [""],
+    ETA: [],
+    "Place Of Delivery": [""],
+    "Discharge Date": [new Date()],
+    "Sailing Time": [""],
   });
 
-  contractForm = new FormGroup({
-    contractNumber: new FormControl("", Validators.required),
-    contractDate: new FormControl(new Date(), Validators.required),
-    businessDate: new FormControl(new Date(), Validators.required),
-    companyName: new FormControl("", Validators.required),
-    material: new FormControl("", Validators.required),
-    price: new FormControl(0, Validators.required),
-    quantity: new FormControl(0, Validators.required),
-    paymentTerms: new FormControl("", Validators.required),
-    advancePaid: new FormControl(0),
-    advancePaidDate: new FormControl(),
-    contractQuantity: new FormControl(0),
-    invoiceDate: new FormControl(new Date()),
-    invoiceNumber: new FormControl(""),
-    invoiceValue: new FormControl(),
-    shippingQuantity: new FormControl(0, Validators.required),
-    noOfContainers: new FormControl(0, Validators.required),
-    containerNumber: new FormControl(""),
-    loadingPort: new FormControl(""),
-    oblDate: new FormControl(new Date()),
-    oblNumber: new FormControl(""),
-    psicDetail: new FormControl(""),
-    dhlDetail: new FormControl(""),
-    shippingLine: new FormControl(""),
-    eta: new FormControl(),
-    placeOfDelivery: new FormControl(""),
-    dischargeDate: new FormControl(new Date()),
-    sailingTime: new FormControl(""),
-  });
-
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private _authenticationService: AuthenticationService,
+    private _consignmentService: ConsignmentService,
+    private consignmentFormBuilder: FormBuilder,
+    private consignmentNumberFormBuilder: FormBuilder
+  ) {}
 
   /**
    * This method will get the form
    * data and send it to the BE
    * for saving in the database
-   * @param data
+   * @param form
    * @returns void
    */
-  onFormSubmit = (data) => {
-    console.log(data);
+  onFormSubmit = (form) => {
+    if (this.contractForm.dirty && this.contractForm.valid) {
+      let request = {};
+      const obj = form.getRawValue();
+      obj[USER_ID] = this.userDetails.userId;
+      request[TOKEN] = this.userDetails.token;
+      request[OBJ] = obj;
+      let response;
+      if (this.isNewConsignment) {
+        response = this._consignmentService.onCreateConsignment(
+          request,
+          IS_ADD_TOKEN
+        );
+      } else {
+        request[CONSIGNMENT_ID] = this.consignmentDetail._id;
+        response = this._consignmentService.onUpdateConsignment(
+          request,
+          IS_ADD_TOKEN
+        );
+      }
+
+      response.subscribe((res) => {
+        let responseValue = JSON.parse(JSON.stringify(res));
+        if (responseValue.success && responseValue.statusCode === 200) {
+          this.errorMessage = "";
+          this.showSuccessMessage(responseValue.message);
+        } else if (!responseValue.success && responseValue.statusCode === 401) {
+          this.errorMessage = responseValue.message;
+          setTimeout(() => {
+            this.router.navigateByUrl(LOGIN_USER_URL);
+          }, 2000);
+        } else {
+          this.errorMessage = responseValue.message;
+        }
+      });
+    }
+  };
+
+  /**
+   * This method will show the alert
+   * message on successfully saving the
+   * transaction
+   *
+   * @param message
+   * @returns void
+   */
+  showSuccessMessage = (message) => {
+    Swal.fire({
+      text: message,
+      icon: "success",
+      confirmButtonText: "Ok",
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.value) {
+        this.errorMessage = "";
+        if (!this.isNewConsignment) {
+          this.form.resetForm({
+            consignmentNumber: "",
+          });
+        }
+        this.resetFormValues();
+      }
+    });
   };
 
   /**
@@ -77,20 +158,132 @@ export class ConsignmentDetailsComponent implements OnInit {
    * consignement details based on the
    */
   onRetrieveDetail = (data) => {
-    CONSIGNMENT_DETAILS.forEach((value) => {
-      if (value.contractNumber === data.consignmentNumber) {
-        this.contractForm.setValue(value);
-      }
+    if (this.consignmentNumberForm.dirty && this.consignmentNumberForm.valid) {
+      let request = {};
+      request[USER_ID] = this.userDetails.userId;
+      request[TOKEN] = this.userDetails.token;
+      const obj = data.getRawValue();
+      obj.consignmentNumber = obj.consignmentNumber.trim();
+      request[OBJ] = obj;
+      this._consignmentService
+        .onRetrieveConsignmentDetail(request, IS_ADD_TOKEN)
+        .subscribe((res) => {
+          let responseValue = JSON.parse(JSON.stringify(res));
+          if (responseValue.success && responseValue.statusCode === 200) {
+            if (responseValue.data) {
+              this.errorMessage = "";
+              this.consignmentDetail = responseValue.data;
+              this.setFormValues(this.consignmentDetail);
+            } else {
+              this.errorMessage = responseValue.message;
+            }
+          } else if (
+            !responseValue.success &&
+            responseValue.statusCode === 401
+          ) {
+            this.errorMessage = responseValue.message;
+            setTimeout(() => {
+              this.router.navigateByUrl(LOGIN_USER_URL);
+            }, 2000);
+          } else {
+            this.errorMessage = responseValue.message;
+          }
+        });
+    }
+  };
+
+  /**
+   * This method will set the
+   * form values on retrieving the
+   * consignment details
+   *
+   * @param consignmentDetails
+   */
+  setFormValues = (consignmentDetails) => {
+    this.contractForm.setValue({
+      "Contract Number": consignmentDetails["Contract Number"],
+      "Contract Date": new Date(consignmentDetails["Contract Date"]),
+      "Business Date": new Date(consignmentDetails["Business Date"]),
+      "Company Name": consignmentDetails["Company Name"],
+      Material: consignmentDetails["Material"],
+      Price: consignmentDetails["Price"],
+      Quantity: consignmentDetails["Contract Quantity (MT)"],
+      "Payment Terms": consignmentDetails["Payment Terms"],
+      "Advance To Be Paid": consignmentDetails["Advance To Be Paid"],
+      "Advance Paid Date": consignmentDetails["Advance Paid Date"],
+      "Contract Quantity (MT)": consignmentDetails["Contract Quantity (MT)"],
+      "Invoice Date": new Date(consignmentDetails["Invoice Date"]),
+      "Invoice Number": consignmentDetails["Invoice Number"],
+      "Invoice Price": consignmentDetails["Invoice Price"],
+      "Shipped Quantity (MT)": consignmentDetails["Shipped Quantity (MT)"],
+      Containers: consignmentDetails["Containers"],
+      "Container Numbers": consignmentDetails["Container Numbers"],
+      "Loading Port": consignmentDetails["Loading Port"],
+      "OB/L Date": new Date(consignmentDetails["OB/L Date"]),
+      "B/L Number": consignmentDetails["B/L Number"],
+      "PSIC Courier Details": consignmentDetails["PSIC Courier Details"],
+      "DHL / Delivery Date": consignmentDetails["DHL / Delivery Date"],
+      "Shipping Line": consignmentDetails["Shipping Line"],
+      ETA: consignmentDetails["ETA"],
+      "Place Of Delivery": consignmentDetails["Place Of Delivery"],
+      "Discharge Date": new Date(consignmentDetails["Discharge Date"]),
+      "Sailing Time": consignmentDetails["Sailing Time"],
+    });
+  };
+
+  /**
+   * This method will reset the form value
+   * on submitting the form
+   *
+   * @returns void
+   */
+  resetFormValues = () => {
+    this.contractForm.reset({
+      "Contract Number": "",
+      "Contract Date": new Date(),
+      "Business Date": new Date(),
+      "Company Name": "",
+      Material: "",
+      Price: 0,
+      Quantity: 0,
+      "Payment Terms": "",
+      "Advance To Be Paid": 0,
+      "Advance Paid Date": "",
+      "Contract Quantity (MT)": 0,
+      "Invoice Date": new Date(),
+      "Invoice Number": "",
+      "Invoice Price": "",
+      "Shipped Quantity (MT)": 0,
+      Containers: 0,
+      "Container Numbers": "",
+      "Loading Port": "",
+      "OB/L Date": new Date(),
+      "B/L Number": "",
+      "PSIC Courier Details": "",
+      "DHL / Delivery Date": "",
+      "Shipping Line": "",
+      ETA: "",
+      "Place Of Delivery": "",
+      "Discharge Date": new Date(),
+      "Sailing Time": "",
+    });
+    Object.keys(this.contractForm.controls).forEach((key) => {
+      this.contractForm.controls[key].setErrors(null);
     });
   };
 
   ngOnInit() {
-    if (this.activatedRoute.snapshot.routeConfig.path === CONSIGNMENT) {
-      this.isNewConsignment = true;
-      this.screenTitle = NEW_CONSIGNMENT_TITLE;
+    if (!this._authenticationService.getUserDetail().isUserAuthenticated) {
+      this.router.navigateByUrl(LOGIN_USER_URL);
     } else {
-      this.isNewConsignment = false;
-      this.screenTitle = EDIT_CONSIGNMENT_TITLE;
+      if (this.activatedRoute.snapshot.routeConfig.path === CONSIGNMENT) {
+        this.isNewConsignment = true;
+        this.screenTitle = NEW_CONSIGNMENT_TITLE;
+      } else {
+        this.isNewConsignment = false;
+        this.screenTitle = EDIT_CONSIGNMENT_TITLE;
+      }
+      this.userDetails = this._authenticationService.getUserDetail();
     }
   }
 }
