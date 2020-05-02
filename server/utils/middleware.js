@@ -14,11 +14,11 @@ const logger = require("../logger");
 var middlewareObject = {};
 
 middlewareObject.verifyToken = (req, res, next) => {
+  let userId, token;
   try {
-    let userId =
-      req.body.obj != undefined ? req.body.obj.userId : req.query.obj;
+    userId = req.body.obj != undefined ? req.body.obj.userId : req.query.obj;
     let usertoken = req.body.obj != undefined ? req.body.obj.token : "";
-    let token = req.headers["authorization"]
+    token = req.headers["authorization"]
       ? req.headers["authorization"]
       : usertoken;
     if (token.startsWith("Bearer ")) {

@@ -14,6 +14,7 @@ let express = require("express"),
   mongoose = require("mongoose"),
   logger = require("./logger"),
   indexRoute = require("./routes/index"),
+  consignmentRoute = require("./routes/consignmentRoute"),
   { INFO } = require("./utils/constants").LOGGER_LEVEL,
   MONGO_URL = require("./utils/constants").MONGO_URL;
 
@@ -43,6 +44,7 @@ app.use(function (_req, res, next) {
 });
 
 app.use("/api/", indexRoute);
+app.use("/api/consignment/", consignmentRoute);
 
 app.listen("3100", process.env.IP, () => {
   logger.log({ level: INFO, message: "API Server has started..." });
