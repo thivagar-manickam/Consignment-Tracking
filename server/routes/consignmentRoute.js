@@ -19,6 +19,47 @@ const { INFO, ERROR } = require("../utils/constants").LOGGER_LEVEL;
 const Consignment = require("../models/consignmentModel");
 const middleware = require("../utils/middleware");
 
+router.get("/", middleware.verifyToken, (req, res) => {
+  logger.log({
+    level: INFO,
+    message: `Going to fetch all the consignment details`,
+  });
+  try {
+    Consignment.find({}, (err, foundConsignment) => {
+      if (err) {
+        logger.log({
+          level: ERROR,
+          message: `Error in retrieving the consignment details`,
+        });
+        res.send({
+          success: false,
+          statusCode: 500,
+          message: `Error while retrieving the consignment details. Please try later`,
+        });
+      } else {
+        logger.log({
+          level: INFO,
+          message: `Retrieved the consignment details successfully`,
+        });
+        res.send({
+          success: true,
+          statusCode: 200,
+          data: foundConsignment,
+        });
+      }
+    });
+  } catch (exception) {
+    logger.log({
+      level: ERROR,
+      message: `Exception while trying to fetch all the consignment details`,
+    });
+    res.send({
+      success: false,
+      statusCode: 500,
+      message: `Error in retrieving the consignment details. Please try again`,
+    });
+  }
+});
 router.get("/get/:id*", middleware.verifyToken, (req, res) => {
   logger.log({
     level: INFO,
