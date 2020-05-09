@@ -1,0 +1,347 @@
+<app-menubar></app-menubar>
+<div id="main-container">
+  <h3>{{ screenTitle }}</h3>
+  <div class="error-block" color="danger" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+  <ngx-spinner
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-multiple"
+  >
+    <p class="spinner-text">{{ spinnerMessage }}</p>
+  </ngx-spinner>
+  <div id="consigment-number-container" *ngIf="!isNewConsignment">
+    <form
+      [formGroup]="consignmentNumberForm"
+      (ngSubmit)="onRetrieveDetail(consignmentNumberForm)"
+    >
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          autocomplete="off"
+          autofocus
+          formControlName="consignmentNumber"
+          placeholder="Consignment Number"
+          required
+        />
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="button" type="submit">
+        Retrieve Details
+      </button>
+    </form>
+  </div>
+  <div id="data-entry-container">
+    <mat-card>
+      <mat-card-content>
+        <form
+          [formGroup]="contractForm"
+          (ngSubmit)="onFormSubmit(contractForm)"
+          id="contract-form"
+        >
+          <mat-tab-group dynamicHeight>
+            <mat-tab label="Contract Details">
+              <div>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    type="text"
+                    autocomplete="off"
+                    formControlName="Contract_Number"
+                    placeholder="Contract Number"
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    [matDatepicker]="contractDatePicker"
+                    formControlName="Contract_Date"
+                    placeholder="Contract date"
+                    required
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="contractDatePicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #contractDatePicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    [matDatepicker]="businessDatePicker"
+                    placeholder="Business date"
+                    formControlName="Business_Date"
+                    required
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="businessDatePicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #businessDatePicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Company Name"
+                    formControlName="Company_Name"
+                    required
+                  />
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    type="text"
+                    placeholder="Material"
+                    formControlName="Material"
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="Price"
+                    placeholder="Price"
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="Payment_Terms"
+                    placeholder="Payment Terms"
+                    required
+                  />
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="Advance_To_Be_Paid"
+                    placeholder="Advance to be paid"
+                  />
+                </mat-form-field>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    [matDatepicker]="advanceDatePicker"
+                    formControlName="Advance_Paid_Date"
+                    placeholder="Advance paid date"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="advanceDatePicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #advanceDatePicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="Contract_Quantity_MT"
+                    placeholder="Contract Quantity"
+                    required
+                  />
+                </mat-form-field>
+              </div>
+            </mat-tab>
+            <mat-tab label="Invoice Details">
+              <div>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    [matDatepicker]="invoiceDatePicker"
+                    formControlName="Invoice_Date"
+                    placeholder="Invoice date"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="invoiceDatePicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #invoiceDatePicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="Invoice_Number"
+                    placeholder="Invoice Number"
+                  />
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="Invoice_Price"
+                    placeholder="Invoice Value"
+                  />
+                </mat-form-field>
+              </div>
+            </mat-tab>
+            <mat-tab label="Shipment Details">
+              <div id="shipping-tab">
+                <div>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="Shipped_Quantity_MT"
+                      placeholder="Shipping Quantity"
+                      required
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="Containers"
+                      placeholder="Number of Containers"
+                      required
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      type="text"
+                      formControlName="Container_Numbers"
+                      placeholder="Container numbers"
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      type="text"
+                      formControlName="Loading_Port"
+                      placeholder="Loading Port"
+                    />
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      [matDatepicker]="OBLDatePicker"
+                      placeholder="OBL Date"
+                      formControlName="OB_L_Date"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="OBLDatePicker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #OBLDatePicker></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      type="text"
+                      formControlName="B_L_Number"
+                      placeholder="OBL Number"
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      type="text"
+                      formControlName="PSIC_Courier_Details"
+                      placeholder="PSIC Details"
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      type="text"
+                      formControlName="DHL_Delivery_Date"
+                      placeholder="DHL"
+                    />
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      type="text"
+                      placeholder="Shipping Line"
+                      formControlName="Shipping_Line"
+                      requried
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      [matDatepicker]="EtaDatePicker"
+                      placeholder="ETA"
+                      formControlName="ETA"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="EtaDatePicker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #EtaDatePicker></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      type="text"
+                      formControlName="Place_Of_Delivery"
+                      placeholder="Place of Delivery"
+                      required
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      [matDatepicker]="dischargeDatePicker"
+                      placeholder="Discharge Date"
+                      formControlName="Discharge_Date"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="dischargeDatePicker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker
+                      touchUi
+                      #dischargeDatePicker
+                    ></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      type="text"
+                      formControlName="Sailing_Time"
+                      placeholder="Sailing time"
+                      required
+                    />
+                  </mat-form-field>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    type="submit"
+                    class="buttons"
+                  >
+                    Save
+                  </button>
+                  <button mat-raised-button color="warn" class="buttons">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
