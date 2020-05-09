@@ -5,6 +5,7 @@ export const REGISTER_SUCCESS_MESSAGE = "User registered successfully!!!";
 export const REGISTER_ERROR_MESSAGE =
   "New password and Confirm password mismatch";
 export const CONSIGNMENT = "consignment";
+export const ADD_CONSIGNMENT = "consignment/add";
 export const NEW_CONSIGNMENT_TITLE = "Add New Consignment";
 export const EDIT_CONSIGNMENT_TITLE = "Update Consignment detail";
 
@@ -22,6 +23,15 @@ export const BASE_URL = "http://localhost:4200/api";
 export const LOGIN_USER_URL = "login";
 export const REGISTER_USER_URL = "register";
 export const LOGOUT_USER_URL = "logout";
-export const CONSIGNMENT_GET_URL = "/consignment/get";
+export const CONSIGNMENT_GET_URL = "/consignment";
+export const CONSIGNMENT_RETRIEVE_URL = "/consignment/get";
 export const CONSIGNMENT_PUT_URL = "/consignment/edit";
 export const CONSIGNMENT_POST_URL = "/consignment/add";
+
+export const CONSIGNMENT_TABLE_DEF = [
+  "Contract_Number",
+  "Company_Name",
+  "Status",
+  "Material",
+  "Contract_Quantity_MT",
+];
