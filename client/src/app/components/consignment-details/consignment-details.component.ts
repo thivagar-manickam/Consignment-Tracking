@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import {
   animate,
@@ -8,8 +8,9 @@ import {
   trigger,
 } from "@angular/animations";
 
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material";
 
 import { AuthenticationService } from "../../services/authentication/authentication.service";
 import { ConsignmentService } from "../../services/consignment/consignment.service";
@@ -39,12 +40,14 @@ import {
   ],
 })
 export class ConsignmentDetailsComponent implements OnInit {
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   spinnerMessage = "";
   errorMessage = "";
   userDetails;
   columnsToDisplay = CONSIGNMENT_TABLE_DEF;
   consignmentTableSource;
-  consignmentData: ConsignementColumns | null;
 
   constructor(
     private router: Router,
@@ -52,6 +55,32 @@ export class ConsignmentDetailsComponent implements OnInit {
     private _consignmentService: ConsignmentService,
     private spinnerService: NgxSpinnerService
   ) {}
+
+  /**
+   * This method will filter the table
+   * based on the search term given
+   * in the text input field
+   * @param event
+   */
+  applyFilter = (event: Event) => {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.consignmentTableSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.consignmentTableSource.paginator) {
+      this.consignmentTableSource.paginator.firstPage();
+    }
+  };
+
+  /**
+   * This method will replace all
+   * the underscore(_) to spaces
+   * in the grid column header
+   *
+   * @param value
+   */
+  replaceUnderScore = (value) => {
+    return value.replace(/_/g, " ");
+  };
 
   /**
    * This method is used to invoke the
@@ -70,8 +99,9 @@ export class ConsignmentDetailsComponent implements OnInit {
       .subscribe((res) => {
         let response = JSON.parse(JSON.stringify(res));
         if (response.success && response.statusCode === 200) {
-          let EXPANDED_DATA: ConsignementColumns[] = response.data;
-          this.consignmentTableSource = EXPANDED_DATA;
+          this.consignmentTableSource = new MatTableDataSource(response.data);
+          this.consignmentTableSource.paginator = this.paginator;
+          this.consignmentTableSource.sort = this.sort;
         } else if (!response.success && response.statusCode === 401) {
           this.errorMessage = response.message;
           setTimeout(() => {
@@ -94,8 +124,4 @@ export class ConsignmentDetailsComponent implements OnInit {
       this.fetchConsignmentDetails();
     }
   }
-}
-
-export interface ConsignementColumns {
-  Status: string;
 }
