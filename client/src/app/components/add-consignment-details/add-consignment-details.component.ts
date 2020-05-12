@@ -19,6 +19,8 @@ import {
   CONSIGNMENT_ID,
   RETRIEVING_DATA,
   SAVING_CONSIGNMENT_DETAILS,
+  STATUS,
+  MONTH,
 } from "../../utils/constants.js";
 
 @Component({
@@ -35,6 +37,7 @@ export class AddConsignmentDetailsComponent implements OnInit {
   userDetails;
   consignmentDetail;
   spinnerMessage;
+  statusValues = STATUS;
 
   consignmentNumberForm = this.consignmentNumberFormBuilder.group({
     consignmentNumber: ["", Validators.required],
@@ -45,17 +48,19 @@ export class AddConsignmentDetailsComponent implements OnInit {
     Contract_Date: [new Date(), Validators.required],
     Business_Date: [new Date(), Validators.required],
     Company_Name: ["", Validators.required],
+    Month: [""],
+    Status: [""],
     Material: ["", Validators.required],
     Price: [0, Validators.required],
-    Payment_Terms: ["", Validators.required],
+    Payment_Terms: [""],
     Advance_To_Be_Paid: [0],
     Advance_Paid_Date: [],
     Contract_Quantity_MT: [0],
     Invoice_Date: [new Date()],
     Invoice_Number: [""],
     Invoice_Price: [],
-    Shipped_Quantity_MT: [0, Validators.required],
-    Containers: [0, Validators.required],
+    Shipped_Quantity_MT: [0],
+    Containers: [0],
     Container_Numbers: [""],
     Loading_Port: [""],
     OB_L_Date: [new Date()],
@@ -90,6 +95,7 @@ export class AddConsignmentDetailsComponent implements OnInit {
     if (this.contractForm.dirty && this.contractForm.valid) {
       let request = {};
       const obj = form.getRawValue();
+      obj[MONTH] = new Date().getMonth();
       obj[USER_ID] = this.userDetails.userId;
       request[TOKEN] = this.userDetails.token;
       request[OBJ] = obj;
@@ -210,6 +216,8 @@ export class AddConsignmentDetailsComponent implements OnInit {
       Contract_Date: new Date(consignmentDetails["Contract_Date"]),
       Business_Date: new Date(consignmentDetails["Business_Date"]),
       Company_Name: consignmentDetails["Company_Name"],
+      Status: consignmentDetails["Status"],
+      Month: consignmentDetails["Month"],
       Material: consignmentDetails["Material"],
       Price: consignmentDetails["Price"],
       Payment_Terms: consignmentDetails["Payment_Terms"],
@@ -247,7 +255,9 @@ export class AddConsignmentDetailsComponent implements OnInit {
       Contract_Date: new Date(),
       Business_Date: new Date(),
       Company_Name: "",
+      Status: "",
       Material: "",
+      Month: "",
       Price: 0,
       Payment_Terms: "",
       Advance_To_Be_Paid: 0,

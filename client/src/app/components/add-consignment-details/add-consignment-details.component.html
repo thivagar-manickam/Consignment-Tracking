@@ -24,12 +24,12 @@
           autocomplete="off"
           autofocus
           formControlName="consignmentNumber"
-          placeholder="Consignment Number"
+          placeholder="Contract Number"
           required
         />
       </mat-form-field>
       <button mat-raised-button color="primary" class="button" type="submit">
-        Retrieve Details
+        Retrieve and update details
       </button>
     </form>
   </div>
@@ -69,6 +69,16 @@
                   <mat-datepicker touchUi #contractDatePicker></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field class="inputField">
+                  <mat-select placeholder="Status" formControlName="Status">
+                    <mat-option
+                      *ngFor="let status of statusValues"
+                      [value]="status"
+                    >
+                      {{ status }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="inputField">
                   <input
                     matInput
                     [matDatepicker]="businessDatePicker"
@@ -91,8 +101,6 @@
                     required
                   />
                 </mat-form-field>
-              </div>
-              <div>
                 <mat-form-field class="inputField">
                   <input
                     matInput
@@ -148,13 +156,39 @@
                     matInput
                     type="number"
                     formControlName="Contract_Quantity_MT"
-                    placeholder="Contract Quantity"
+                    placeholder="Quantity (MT)"
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field class="inputField" *ngIf="!isNewConsignment">
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="Month"
+                    placeholder="Month"
                     required
                   />
                 </mat-form-field>
               </div>
+              <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+                class="buttons"
+                *ngIf="isNewConsignment"
+              >
+                Save
+              </button>
+              <button
+                mat-raised-button
+                color="warn"
+                class="buttons"
+                *ngIf="isNewConsignment"
+              >
+                Cancel
+              </button>
             </mat-tab>
-            <mat-tab label="Invoice Details">
+            <mat-tab label="Invoice Details" *ngIf="!isNewConsignment">
               <div>
                 <mat-form-field class="inputField">
                   <input
@@ -191,7 +225,7 @@
                 </mat-form-field>
               </div>
             </mat-tab>
-            <mat-tab label="Shipment Details">
+            <mat-tab label="Shipment Details" *ngIf="!isNewConsignment">
               <div id="shipping-tab">
                 <div>
                   <mat-form-field class="inputField">
@@ -200,7 +234,6 @@
                       type="number"
                       formControlName="Shipped_Quantity_MT"
                       placeholder="Shipping Quantity"
-                      required
                     />
                   </mat-form-field>
                   <mat-form-field class="inputField">
@@ -209,7 +242,6 @@
                       type="number"
                       formControlName="Containers"
                       placeholder="Number of Containers"
-                      required
                     />
                   </mat-form-field>
                   <mat-form-field class="inputField">
@@ -297,7 +329,6 @@
                       type="text"
                       formControlName="Place_Of_Delivery"
                       placeholder="Place of Delivery"
-                      required
                     />
                   </mat-form-field>
                   <mat-form-field class="inputField">
@@ -322,22 +353,27 @@
                       type="text"
                       formControlName="Sailing_Time"
                       placeholder="Sailing time"
-                      required
                     />
                   </mat-form-field>
-                  <button
-                    mat-raised-button
-                    color="primary"
-                    type="submit"
-                    class="buttons"
-                  >
-                    Save
-                  </button>
-                  <button mat-raised-button color="warn" class="buttons">
-                    Cancel
-                  </button>
                 </div>
               </div>
+              <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+                class="buttons"
+                *ngIf="!isNewConsignment"
+              >
+                Save
+              </button>
+              <button
+                mat-raised-button
+                color="warn"
+                class="buttons"
+                *ngIf="!isNewConsignment"
+              >
+                Cancel
+              </button>
             </mat-tab>
           </mat-tab-group>
         </form>
