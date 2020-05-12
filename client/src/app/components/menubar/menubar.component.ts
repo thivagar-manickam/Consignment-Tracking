@@ -17,6 +17,7 @@ import {
 })
 export class MenubarComponent implements OnInit {
   userDetails;
+  userName;
   errorMessage = "";
   constructor(
     private router: Router,
@@ -50,6 +51,7 @@ export class MenubarComponent implements OnInit {
       this.router.navigateByUrl(LOGIN_USER_URL);
     } else {
       this.userDetails = this._authenticationService.getUserDetail();
+      this.userName = this.userDetails.username;
     }
   }
 }
