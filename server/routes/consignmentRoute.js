@@ -68,7 +68,7 @@ router.get("/get/:id*", middleware.verifyToken, (req, res) => {
   let contractNumber = `${req.params["id"]}${req.params[0]}`;
   try {
     Consignment.find(
-      { "Contract Number": contractNumber },
+      { Contract_Number: contractNumber },
       (err, foundConsignment) => {
         if (err) {
           logger.log({
