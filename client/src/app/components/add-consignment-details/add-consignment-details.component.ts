@@ -95,7 +95,7 @@ export class AddConsignmentDetailsComponent implements OnInit {
     if (this.contractForm.dirty && this.contractForm.valid) {
       let request = {};
       const obj = form.getRawValue();
-      obj[MONTH] = new Date().getMonth();
+      obj[MONTH] = new Date().toLocaleString("default", { month: "short" });
       obj[USER_ID] = this.userDetails.userId;
       request[TOKEN] = this.userDetails.token;
       request[OBJ] = obj;
@@ -168,10 +168,10 @@ export class AddConsignmentDetailsComponent implements OnInit {
   onRetrieveDetail = (data) => {
     if (this.consignmentNumberForm.dirty && this.consignmentNumberForm.valid) {
       let request = {};
-      request[USER_ID] = this.userDetails.userId;
       request[TOKEN] = this.userDetails.token;
       const obj = data.getRawValue();
       obj.consignmentNumber = obj.consignmentNumber.trim();
+      obj[USER_ID] = this.userDetails.userId;
       request[OBJ] = obj;
       this.spinnerMessage = RETRIEVING_DATA;
       this.spinnerService.show();

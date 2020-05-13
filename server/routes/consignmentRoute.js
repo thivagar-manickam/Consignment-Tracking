@@ -60,12 +60,12 @@ router.get("/", middleware.verifyToken, (req, res) => {
     });
   }
 });
-router.get("/get/:id*", middleware.verifyToken, (req, res) => {
+router.post("/get", middleware.verifyToken, (req, res) => {
   logger.log({
     level: INFO,
     message: `Going to fetch the consignment details based on the Contract number`,
   });
-  let contractNumber = `${req.params["id"]}${req.params[0]}`;
+  let contractNumber = req.body.obj.consignmentNumber;
   try {
     Consignment.find(
       { Contract_Number: contractNumber },

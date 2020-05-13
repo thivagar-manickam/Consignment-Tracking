@@ -56,12 +56,10 @@ export class ConsignmentService {
    */
   onRetrieveConsignmentDetail(data, isAddToken): Observable<any> {
     let request = {};
-    request[
-      URL
-    ] = `${BASE_URL}/${CONSIGNMENT_RETRIEVE_URL}/${data.obj.consignmentNumber}`;
-    request[OBJ] = data.userId;
+    request[URL] = `${BASE_URL}/${CONSIGNMENT_RETRIEVE_URL}`;
+    request[OBJ] = data.obj;
     request[TOKEN] = data.token;
-    return this._apiService.getData(request, isAddToken);
+    return this._apiService.postData(request, isAddToken);
   }
 
   /**

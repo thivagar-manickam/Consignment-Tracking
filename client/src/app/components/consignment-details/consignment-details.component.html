@@ -62,7 +62,8 @@
                     <b>Contract Number:</b> {{ data.Contract_Number }}
                   </div>
                   <div class="consignmentField" *ngIf="data.Contract_Date">
-                    <b>Contract Date:</b> {{ data.Contract_Date }}
+                    <b>Contract Date:</b>
+                    {{ data.Contract_Date | date: longdate }}
                   </div>
                   <div class="consignmentField" *ngIf="data.Business_Date">
                     <b>Business Date:</b> {{ data.Business_Date }}

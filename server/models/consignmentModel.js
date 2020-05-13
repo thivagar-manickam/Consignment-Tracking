@@ -16,6 +16,7 @@ const consignmentSchema = mongoose.Schema({
   Status: String,
   Material: String,
   On_Board_Date: String,
+  Month: String,
   Price: Number,
   Payment_Terms: String,
   Advance_To_Be_Paid: Number,
