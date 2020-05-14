@@ -134,27 +134,6 @@
                   <input
                     matInput
                     type="number"
-                    formControlName="Advance_To_Be_Paid"
-                    placeholder="Advance to be paid"
-                  />
-                </mat-form-field>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    [matDatepicker]="advanceDatePicker"
-                    formControlName="Advance_Paid_Date"
-                    placeholder="Advance paid date"
-                  />
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="advanceDatePicker"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #advanceDatePicker></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    type="number"
                     formControlName="Contract_Quantity_MT"
                     placeholder="Quantity (MT)"
                     required
@@ -190,6 +169,27 @@
             </mat-tab>
             <mat-tab label="Invoice Details" *ngIf="!isNewConsignment">
               <div>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="Advance_To_Be_Paid"
+                    placeholder="Advance to be paid"
+                  />
+                </mat-form-field>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    [matDatepicker]="advanceDatePicker"
+                    formControlName="Advance_Paid_Date"
+                    placeholder="Advance paid date"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="advanceDatePicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #advanceDatePicker></mat-datepicker>
+                </mat-form-field>
                 <mat-form-field class="inputField">
                   <input
                     matInput
