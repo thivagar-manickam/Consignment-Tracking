@@ -41,6 +41,7 @@ export const STATUS = [
 export const CONSIGNMENT_TABLE_DEF = [
   "Contract_Number",
   "Company_Name",
+  "Business_Date",
   "Status",
   "Material",
   "Contract_Quantity_MT",

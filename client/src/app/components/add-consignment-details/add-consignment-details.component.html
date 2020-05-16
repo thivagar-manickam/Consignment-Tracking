@@ -203,8 +203,6 @@
                   ></mat-datepicker-toggle>
                   <mat-datepicker touchUi #invoiceDatePicker></mat-datepicker>
                 </mat-form-field>
-              </div>
-              <div>
                 <mat-form-field class="inputField">
                   <input
                     matInput
@@ -221,6 +219,31 @@
                     type="number"
                     formControlName="Invoice_Price"
                     placeholder="Invoice Value"
+                  />
+                </mat-form-field>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    [matDatepicker]="invoicePaidDatePicker"
+                    formControlName="Invoice_Paid_Date"
+                    placeholder="Invoice Paid Date"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="invoicePaidDatePicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    touchUi
+                    #invoicePaidDatePicker
+                  ></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="inputField">
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="Payment_Duration"
+                    placeholder="Payment Duration (in Days)"
+                    readonly="true"
                   />
                 </mat-form-field>
               </div>
@@ -334,6 +357,19 @@
                   <mat-form-field class="inputField">
                     <input
                       matInput
+                      [matDatepicker]="onBoardDatePicker"
+                      formControlName="On_Board_Date"
+                      placeholder="On Board Date"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="onBoardDatePicker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #onBoardDatePicker></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
                       [matDatepicker]="dischargeDatePicker"
                       placeholder="Discharge Date"
                       formControlName="Discharge_Date"
@@ -352,7 +388,8 @@
                       matInput
                       type="text"
                       formControlName="Sailing_Time"
-                      placeholder="Sailing time"
+                      placeholder="Sailing time (in Days)"
+                      readonly="true"
                     />
                   </mat-form-field>
                 </div>

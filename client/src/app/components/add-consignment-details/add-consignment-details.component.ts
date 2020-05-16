@@ -1,11 +1,17 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormBuilder, Validators, FormGroupDirective } from "@angular/forms";
+import { DateAdapter, MAT_DATE_FORMATS } from "@angular/material/core";
 import { AuthenticationService } from "../../services/authentication/authentication.service";
 import { ConsignmentService } from "../../services/consignment/consignment.service";
 
 import { NgxSpinnerService } from "ngx-spinner";
 import Swal from "sweetalert2";
+
+import {
+  AppDateAdapter,
+  APP_DATE_FORMATS,
+} from "../../utils/format-datepicker";
 
 import {
   ADD_CONSIGNMENT,
@@ -27,6 +33,10 @@ import {
   selector: "app-consignment-details",
   templateUrl: "./add-consignment-details.component.html",
   styleUrls: ["./add-consignment-details.component.scss"],
+  providers: [
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+  ],
 })
 export class AddConsignmentDetailsComponent implements OnInit {
   @ViewChild(FormGroupDirective, null) form;
@@ -53,25 +63,28 @@ export class AddConsignmentDetailsComponent implements OnInit {
     Material: ["", Validators.required],
     Price: [0, Validators.required],
     Payment_Terms: [""],
+    Payment_Duration: [""],
     Advance_To_Be_Paid: [0],
     Advance_Paid_Date: [],
     Contract_Quantity_MT: [0],
-    Invoice_Date: [new Date()],
+    Invoice_Date: [],
     Invoice_Number: [""],
+    Invoice_Paid_Date: [],
     Invoice_Price: [],
     Shipped_Quantity_MT: [0],
     Containers: [0],
     Container_Numbers: [""],
     Loading_Port: [""],
-    OB_L_Date: [new Date()],
+    OB_L_Date: [],
     B_L_Number: [""],
     PSIC_Courier_Details: [""],
     DHL_Delivery_Date: [""],
     Shipping_Line: [""],
     ETA: [],
     Place_Of_Delivery: [""],
-    Discharge_Date: [new Date()],
+    Discharge_Date: [],
     Sailing_Time: [""],
+    On_Board_Date: [],
   });
 
   constructor(
@@ -211,7 +224,7 @@ export class AddConsignmentDetailsComponent implements OnInit {
    * @param consignmentDetails
    */
   setFormValues = (consignmentDetails) => {
-    this.contractForm.setValue({
+    this.contractForm.patchValue({
       Contract_Number: consignmentDetails["Contract_Number"],
       Contract_Date: new Date(consignmentDetails["Contract_Date"]),
       Business_Date: new Date(consignmentDetails["Business_Date"]),
@@ -224,23 +237,50 @@ export class AddConsignmentDetailsComponent implements OnInit {
       Advance_To_Be_Paid: consignmentDetails["Advance_To_Be_Paid"],
       Advance_Paid_Date: consignmentDetails["Advance_Paid_Date"],
       Contract_Quantity_MT: consignmentDetails["Contract_Quantity_MT"],
-      Invoice_Date: new Date(consignmentDetails["Invoice_Date"]),
       Invoice_Number: consignmentDetails["Invoice_Number"],
       Invoice_Price: consignmentDetails["Invoice_Price"],
+      Payment_Duration: consignmentDetails["Payment_Duration"],
       Shipped_Quantity_MT: consignmentDetails["Shipped_Quantity_MT"],
       Containers: consignmentDetails["Containers"],
       Container_Numbers: consignmentDetails["Container_Numbers"],
       Loading_Port: consignmentDetails["Loading_Port"],
-      OB_L_Date: new Date(consignmentDetails["OB_L_Date"]),
       B_L_Number: consignmentDetails["B_L_Number"],
       PSIC_Courier_Details: consignmentDetails["PSIC_Courier_Details"],
       DHL_Delivery_Date: consignmentDetails["DHL_Delivery_Date"],
       Shipping_Line: consignmentDetails["Shipping_Line"],
-      ETA: new Date(consignmentDetails["ETA"]),
       Place_Of_Delivery: consignmentDetails["Place_Of_Delivery"],
-      Discharge_Date: new Date(consignmentDetails["Discharge_Date"]),
       Sailing_Time: consignmentDetails["Sailing_Time"],
     });
+    if (consignmentDetails["Invoice_Date"]) {
+      this.contractForm.patchValue({
+        Invoice_Date: new Date(consignmentDetails["Invoice_Date"]),
+      });
+    }
+    if (consignmentDetails["Discharge_Date"]) {
+      this.contractForm.patchValue({
+        Discharge_Date: new Date(consignmentDetails["Discharge_Date"]),
+      });
+    }
+    if (consignmentDetails["ETA"]) {
+      this.contractForm.patchValue({
+        ETA: new Date(consignmentDetails["ETA"]),
+      });
+    }
+    if (consignmentDetails["OB_L_Date"]) {
+      this.contractForm.patchValue({
+        OB_L_Date: new Date(consignmentDetails["OB_L_Date"]),
+      });
+    }
+    if (consignmentDetails["Invoice_Paid_Date"]) {
+      this.contractForm.patchValue({
+        Invoice_Paid_Date: new Date(consignmentDetails["Invoice_Paid_Date"]),
+      });
+    }
+    if (consignmentDetails["On_Board_Date"]) {
+      this.contractForm.patchValue({
+        On_Board_Date: new Date(consignmentDetails["On_Board_Date"]),
+      });
+    }
   };
 
   /**
@@ -263,21 +303,21 @@ export class AddConsignmentDetailsComponent implements OnInit {
       Advance_To_Be_Paid: 0,
       Advance_Paid_Date: "",
       Contract_Quantity_MT: 0,
-      Invoice_Date: new Date(),
+      Invoice_Date: "",
       Invoice_Number: "",
       Invoice_Price: "",
       Shipped_Quantity_MT: 0,
       Containers: 0,
       Container_Numbers: "",
       Loading_Port: "",
-      OB_L_Date: new Date(),
+      OB_L_Date: "",
       B_L_Number: "",
       PSIC_Courier_Details: "",
       DHL_Delivery_Date: "",
       Shipping_Line: "",
       ETA: "",
       Place_Of_Delivery: "",
-      Discharge_Date: new Date(),
+      Discharge_Date: "",
       Sailing_Time: "",
     });
     Object.keys(this.contractForm.controls).forEach((key) => {

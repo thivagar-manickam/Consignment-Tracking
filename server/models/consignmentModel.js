@@ -23,7 +23,9 @@ const consignmentSchema = mongoose.Schema({
   Advance_Paid_Date: String,
   Contract_Quantity_MT: String,
   Invoice_Date: String,
+  Invoice_Paid_Date: String,
   Invoice_Number: String,
+  Payment_Duration: String,
   Shipped_Quantity_MT: Number,
   Invoice_Price: Number,
   Containers: Number,
@@ -39,6 +41,7 @@ const consignmentSchema = mongoose.Schema({
   DHL_Delivery_Date: String,
   Comments: String,
   Sailing_Time: Number,
+  Origin: String,
 });
 
 const Consignment = mongoose.model("consignmentDetails", consignmentSchema);

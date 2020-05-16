@@ -26,7 +26,7 @@
         [dataSource]="consignmentTableSource"
         multiTemplateDataRows
         class="mat-elevation-z8"
-        matSortActive="Contract_Number"
+        matSortActive="Business_Date"
         matSortDisableClear
         matSortDirection="asc"
       >
@@ -82,6 +82,9 @@
                   </div>
                   <div class="consignmentField" *ngIf="data.Price">
                     <b>Price:</b> {{ data.Price }}
+                  </div>
+                  <div class="consignmentField" *ngIf="data.Origin">
+                    <b>Origin:</b> {{ data.Origin }}
                   </div>
                   <div class="consignmentField" *ngIf="data.Payment_Terms">
                     <b>Payment Terms:</b> {{ data.Payment_Terms }}
