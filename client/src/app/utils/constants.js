@@ -44,5 +44,6 @@ export const CONSIGNMENT_TABLE_DEF = [
   "Business_Date",
   "Status",
   "Material",
-  "Contract_Quantity_MT",
+  "Price",
+  "Origin",
 ];

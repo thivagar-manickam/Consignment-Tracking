@@ -58,9 +58,6 @@
                   <b>Additional Details:</b>
                 </div>
                 <div>
-                  <div class="consignmentField" *ngIf="data.Contract_Number">
-                    <b>Contract Number:</b> {{ data.Contract_Number }}
-                  </div>
                   <div class="consignmentField" *ngIf="data.Contract_Date">
                     <b>Contract Date:</b>
                     {{ data.Contract_Date | date: longdate }}
@@ -68,23 +65,8 @@
                   <div class="consignmentField" *ngIf="data.Month">
                     <b>Month:</b> {{ data.Month }}
                   </div>
-                  <div class="consignmentField" *ngIf="data.Company_Name">
-                    <b>Company Name:</b> {{ data.Company_Name }}
-                  </div>
-                  <div class="consignmentField" *ngIf="data.Status">
-                    <b>Status:</b> {{ data.Status }}
-                  </div>
-                  <div class="consignmentField" *ngIf="data.Material">
-                    <b>Material:</b> {{ data.Material }}
-                  </div>
                   <div class="consignmentField" *ngIf="data.On_Board_Date">
-                    <b>On Board Date:</b> {{ data.On_Board_Date }}
-                  </div>
-                  <div class="consignmentField" *ngIf="data.Price">
-                    <b>Price:</b> {{ data.Price }}
-                  </div>
-                  <div class="consignmentField" *ngIf="data.Origin">
-                    <b>Origin:</b> {{ data.Origin }}
+                    <b>On Board Date:</b> {{ data.On_Board_Date | date: longdate}}
                   </div>
                   <div class="consignmentField" *ngIf="data.Payment_Terms">
                     <b>Payment Terms:</b> {{ data.Payment_Terms }}
@@ -93,64 +75,61 @@
                     <b>Advance To Be Paid:</b> {{ data.Advance_To_Be_Paid }}
                   </div>
                   <div class="consignmentField" *ngIf="data.Advance_Paid_Date">
-                    <b>Advance Paid Date:</b> {{ data.Advance_Paid_Date }}
+                    <b>Advance Paid Date:</b> {{ data.Advance_Paid_Date | date: longdate}}
                   </div>
                   <div class="consignmentField" *ngIf="data.Advance_Paid_Date">
-                    <b>Advance Paid Date:</b> {{ data.Advance_Paid_Date }}
+                    <b>Advance Paid Date:</b> {{ data.Advance_Paid_Date | date: longdate }}
                   </div>
-                  <div class="consignmentField" *ngIf="Contract_Quantity_MT">
-                    <b>Contract Quantity:</b> {{ data.Contract_Quantity_MT }}
+                  <div class="consignmentField" *ngIf="data.Contract_Quantity_MT">
+                    <b>Contract Quantity:</b> {{ data.Contract_Quantity_MT }} MT
                   </div>
-                  <div class="consignmentField" *ngIf="Invoice_Date">
-                    <b>Invoice Date:</b> {{ data.Invoice_Date }}
+                  <div class="consignmentField" *ngIf="data.Invoice_Date">
+                    <b>Invoice Date:</b> {{ data.Invoice_Date | date: longdate}}
                   </div>
-                  <div class="consignmentField" *ngIf="Invoice_Number">
+                  <div class="consignmentField" *ngIf="data.Invoice_Number">
                     <b>Invoice Number:</b> {{ data.Invoice_Number }}
                   </div>
-                  <div class="consignmentField" *ngIf="Invoice_Price">
-                    <b>Invoice Price:</b> {{ data.Invoice_Price }}
+                  <div class="consignmentField" *ngIf="data.Invoice_Value">
+                    <b>Invoice Value:</b> {{ data.Invoice_Value }}
                   </div>
-                  <div class="consignmentField" *ngIf="Shipped_Quantity_MT">
-                    <b>Shipped_Quantity(MT):</b> {{ data.Shipped_Quantity_MT }}
+                  <div class="consignmentField" *ngIf="data.Shipped_Quantity_MT">
+                    <b>Shipped Quantity:</b> {{ data.Shipped_Quantity_MT }} MT
                   </div>
-                  <div class="consignmentField" *ngIf="Containers">
+                  <div class="consignmentField" *ngIf="data.Containers">
                     <b>Containers:</b> {{ data.Containers }}
                   </div>
-                  <div class="consignmentField" *ngIf="Container_Numbers">
+                  <div class="consignmentField" *ngIf="data.Container_Numbers">
                     <b>Container Numbers:</b> {{ data.Container_Numbers }}
                   </div>
-                  <div class="consignmentField" *ngIf="OB_L_Date">
-                    <b>OB/L Date:</b> {{ data.OB_L_Date }}
+                  <div class="consignmentField" *ngIf="data.OB_L_Date">
+                    <b>OB/L Date:</b> {{ data.OB_L_Date | date: longdate}}
                   </div>
-                  <div class="consignmentField" *ngIf="B_L_Number">
+                  <div class="consignmentField" *ngIf="data.B_L_Number">
                     <b>B/L Number:</b> {{ data.B_L_Number }}
                   </div>
-                  <div class="consignmentField" *ngIf="Loading_Port">
+                  <div class="consignmentField" *ngIf="data.Loading_Port">
                     <b>Loading Port:</b> {{ data.Loading_Port }}
                   </div>
-                  <div class="consignmentField" *ngIf="Shipping_Line">
+                  <div class="consignmentField" *ngIf="data.Shipping_Line">
                     <b>Shipping Line:</b> {{ data.Shipping_Line }}
                   </div>
-                  <div class="consignmentField" *ngIf="ETA">
-                    <b>ETA:</b> {{ data.ETA }}
+                  <div class="consignmentField" *ngIf="data.ETA">
+                    <b>ETA:</b> {{ data.ETA | date: longdate }}
                   </div>
-                  <div class="consignmentField" *ngIf="Discharge_Date">
-                    <b>Discharge Date:</b> {{ data.Discharge_Date }}
+                  <div class="consignmentField" *ngIf="data.Discharge_Date">
+                    <b>Discharge Date:</b> {{ data.Discharge_Date | date: longdate}}
                   </div>
-                  <div class="consignmentField" *ngIf="Place_Of_Delivery">
+                  <div class="consignmentField" *ngIf="data.Place_Of_Delivery">
                     <b>Place Of Delivery:</b> {{ data.Place_Of_Delivery }}
                   </div>
-                  <div class="consignmentField" *ngIf="PSIC_Courier_Details">
+                  <div class="consignmentField" *ngIf="data.PSIC_Courier_Details">
                     <b>PSIC Courier Details:</b> {{ data.PSIC_Courier_Details }}
                   </div>
-                  <div class="consignmentField" *ngIf="PSIC_Courier_Details">
-                    <b>DHL Delivery Date:</b> {{ data.DHL_Delivery_Date }}
+                  <div class="consignmentField" *ngIf="data.DHL_Details">
+                    <b>DHL Details:</b> {{ data.DHL_Details }}
                   </div>
-                  <div class="consignmentField" *ngIf="Sailing_Time">
+                  <div class="consignmentField" *ngIf="data.Sailing_Time">
                     <b>Sailing Time:</b> {{ data.Sailing_Time }}
-                  </div>
-                  <div class="consignmentField" *ngIf="Comments">
-                    <b>Comments:</b> {{ data.Comments }}
                   </div>
                 </div>
               </div>
