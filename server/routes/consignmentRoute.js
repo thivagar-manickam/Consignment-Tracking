@@ -182,13 +182,16 @@ router.post("/add", middleware.verifyToken, (req, res) => {
     const obj = req.body.obj;
     logger.log({
       level: INFO,
-      message: `Going to add new consignment details`,
+      message: `Going to check if contract number already exist`,
     });
-    Consignment.create(obj, (err) => {
+    const searchQuery = {
+      Contract_Number: obj.Contract_Number,
+    };
+    Consignment.find(searchQuery, (err, foundConsignment) => {
       if (err) {
         logger.log({
           level: ERROR,
-          message: `Error while creating the new consignment with error: ${err}`,
+          message: `Error while checking if the contract number already exist`,
         });
         res.send({
           statusCode: 500,
@@ -196,15 +199,41 @@ router.post("/add", middleware.verifyToken, (req, res) => {
           message: `Unable to create the consignment. Please try again`,
         });
       } else {
-        logger.log({
-          level: INFO,
-          message: `Created the new consignment successfully`,
-        });
-        res.send({
-          success: true,
-          statusCode: 200,
-          message: `Consignment created successfully`,
-        });
+        if (foundConsignment.length == 0) {
+          Consignment.create(obj, (err) => {
+            if (err) {
+              logger.log({
+                level: ERROR,
+                message: `Error while creating the new consignment with error: ${err}`,
+              });
+              res.send({
+                statusCode: 500,
+                success: false,
+                message: `Unable to create the consignment. Please try again`,
+              });
+            } else {
+              logger.log({
+                level: INFO,
+                message: `Created the new consignment successfully`,
+              });
+              res.send({
+                success: true,
+                statusCode: 200,
+                message: `Consignment created successfully`,
+              });
+            }
+          });
+        } else {
+          logger.log({
+            level: INFO,
+            message: `The given contract number already exist`,
+          });
+          res.send({
+            success: false,
+            statusCode: 200,
+            message: `Contract number already exist`,
+          });
+        }
       }
     });
   } catch (exception) {

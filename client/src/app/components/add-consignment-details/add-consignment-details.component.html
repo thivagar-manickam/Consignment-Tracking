@@ -171,6 +171,7 @@
                 mat-raised-button
                 color="warn"
                 class="buttons"
+                type="reset"
                 *ngIf="isNewConsignment"
               >
                 Cancel
@@ -406,22 +407,22 @@
             </mat-tab>
           </mat-tab-group>
           <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          class="buttons"
-          *ngIf="!isNewConsignment"
-        >
-          Save
-        </button>
-        <button
-          mat-raised-button
-          color="warn"
-          class="buttons"
-          *ngIf="!isNewConsignment"
-        >
-          Cancel
-        </button>
+            mat-raised-button
+            color="primary"
+            type="submit"
+            class="buttons"
+            *ngIf="!isNewConsignment"
+          >
+            Save
+          </button>
+          <button
+            mat-raised-button
+            color="warn"
+            class="buttons"
+            *ngIf="!isNewConsignment"
+          >
+            Cancel
+          </button>
         </form>
       </mat-card-content>
     </mat-card>
