@@ -81,7 +81,7 @@ export class AddConsignmentDetailsComponent implements OnInit {
     PSIC_Courier_Details: [""],
     DHL_Details: [""],
     Shipping_Line: [""],
-    ETA: [],
+    ETA: [new Date()],
     Place_Of_Delivery: [""],
     Discharge_Date: [],
     Sailing_Time: [""],

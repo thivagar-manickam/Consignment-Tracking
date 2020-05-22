@@ -73,11 +73,7 @@
                     <b>Payment Terms:</b> {{ data.Payment_Terms }}
                   </div>
                   <div class="consignmentField" *ngIf="data.Advance_To_Be_Paid">
-                    <b>Advance To Be Paid:</b> {{ data.Advance_To_Be_Paid }}
-                  </div>
-                  <div class="consignmentField" *ngIf="data.Advance_Paid_Date">
-                    <b>Advance Paid Date:</b>
-                    {{ data.Advance_Paid_Date | date: longdate }}
+                    <b>Advance To Be Paid:</b> {{ data.Advance_To_Be_Paid }} USD
                   </div>
                   <div class="consignmentField" *ngIf="data.Advance_Paid_Date">
                     <b>Advance Paid Date:</b>
@@ -97,7 +93,10 @@
                     <b>Invoice Number:</b> {{ data.Invoice_Number }}
                   </div>
                   <div class="consignmentField" *ngIf="data.Invoice_Value">
-                    <b>Invoice Value:</b> {{ data.Invoice_Value }}
+                    <b>Invoice Value:</b> {{ data.Invoice_Value }} USD
+                  </div>
+                  <div class="consignmentField" *ngIf="data.Payment_Duration">
+                    <b>Payment Duration:</b> {{ data.Payment_Duration }} days
                   </div>
                   <div
                     class="consignmentField"
@@ -124,7 +123,7 @@
                     <b>Shipping Line:</b> {{ data.Shipping_Line }}
                   </div>
                   <div class="consignmentField" *ngIf="data.ETA">
-                    <b>ETA:</b> {{ data.ETA }}
+                    <b>ETA:</b> {{ data.ETA | date: longdate}}
                   </div>
                   <div class="consignmentField" *ngIf="data.Discharge_Date">
                     <b>Discharge Date:</b>
