@@ -47,3 +47,14 @@ export const CONSIGNMENT_TABLE_DEF = [
   "Price",
   "Origin",
 ];
+
+export const DATE_FIELDS = [
+  "Contract_Date",
+  "Advance_Paid_Date",
+  "Invoice_Date",
+  "Invoice_Paid_Date",
+  "OB_L_Date",
+  "ETA",
+  "Discharge_Date",
+  "On_Board_Date",
+];

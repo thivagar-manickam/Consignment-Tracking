@@ -23,6 +23,7 @@ import {
   USER_ID,
   TOKEN,
   IS_ADD_TOKEN,
+  DATE_FIELDS,
 } from "../../utils/constants.js";
 @Component({
   selector: "app-consignment-details",
@@ -43,6 +44,7 @@ export class ConsignmentDetailsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  dateFields = DATE_FIELDS;
   spinnerMessage = "";
   errorMessage = "";
   userDetails;
@@ -99,6 +101,18 @@ export class ConsignmentDetailsComponent implements OnInit {
       .subscribe((res) => {
         let response = JSON.parse(JSON.stringify(res));
         if (response.success && response.statusCode === 200) {
+          /**
+           * To convert the string to date object
+           * so that the date pipe operator can
+           * display it properly in the grid
+           */
+          response.data.forEach((data) => {
+            Object.keys(data).forEach((value) => {
+              if (this.dateFields.indexOf(value) > -1) {
+                if (data[value]) data[value] = new Date(data[value]);
+              }
+            });
+          });
           this.consignmentTableSource = new MatTableDataSource(response.data);
           this.consignmentTableSource.paginator = this.paginator;
           this.consignmentTableSource.sort = this.sort;

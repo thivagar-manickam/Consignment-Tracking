@@ -60,14 +60,14 @@
                 <div>
                   <div class="consignmentField" *ngIf="data.Contract_Date">
                     <b>Contract Date:</b>
-                    {{ data.Contract_Date | date: longdate }}
+                    {{ data.Contract_Date | date: "MM/dd/yyyy" }}
                   </div>
                   <div class="consignmentField" *ngIf="data.Month">
                     <b>Month:</b> {{ data.Month }}
                   </div>
                   <div class="consignmentField" *ngIf="data.On_Board_Date">
                     <b>On Board Date:</b>
-                    {{ data.On_Board_Date | date: longdate }}
+                    {{ data.On_Board_Date | date: "MM/dd/yyyy" }}
                   </div>
                   <div class="consignmentField" *ngIf="data.Payment_Terms">
                     <b>Payment Terms:</b> {{ data.Payment_Terms }}
@@ -77,7 +77,7 @@
                   </div>
                   <div class="consignmentField" *ngIf="data.Advance_Paid_Date">
                     <b>Advance Paid Date:</b>
-                    {{ data.Advance_Paid_Date | date: longdate }}
+                    {{ data.Advance_Paid_Date | date: "MM/dd/yyyy" }}
                   </div>
                   <div
                     class="consignmentField"
@@ -87,7 +87,7 @@
                   </div>
                   <div class="consignmentField" *ngIf="data.Invoice_Date">
                     <b>Invoice Date:</b>
-                    {{ data.Invoice_Date | date: longdate }}
+                    {{ data.Invoice_Date | date: "MM/dd/yyyy" }}
                   </div>
                   <div class="consignmentField" *ngIf="data.Invoice_Number">
                     <b>Invoice Number:</b> {{ data.Invoice_Number }}
@@ -111,7 +111,7 @@
                     <b>Container Numbers:</b> {{ data.Container_Numbers }}
                   </div>
                   <div class="consignmentField" *ngIf="data.OB_L_Date">
-                    <b>OB/L Date:</b> {{ data.OB_L_Date | date: longdate }}
+                    <b>OB/L Date:</b> {{ data.OB_L_Date | date: "MM/dd/yyyy" }}
                   </div>
                   <div class="consignmentField" *ngIf="data.B_L_Number">
                     <b>B/L Number:</b> {{ data.B_L_Number }}
@@ -123,11 +123,11 @@
                     <b>Shipping Line:</b> {{ data.Shipping_Line }}
                   </div>
                   <div class="consignmentField" *ngIf="data.ETA">
-                    <b>ETA:</b> {{ data.ETA | date: longdate}}
+                    <b>ETA:</b> {{ data.ETA | date: "MM/dd/yyyy" }}
                   </div>
                   <div class="consignmentField" *ngIf="data.Discharge_Date">
                     <b>Discharge Date:</b>
-                    {{ data.Discharge_Date | date: longdate }}
+                    {{ data.Discharge_Date | date: "MM/dd/yyyy" }}
                   </div>
                   <div class="consignmentField" *ngIf="data.Place_Of_Delivery">
                     <b>Place Of Delivery:</b> {{ data.Place_Of_Delivery }}
