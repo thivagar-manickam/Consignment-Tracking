@@ -16,6 +16,8 @@ const express = require("express");
 const router = express.Router();
 const logger = require("../logger");
 const { INFO, ERROR } = require("../utils/constants").LOGGER_LEVEL;
+const dateFields = require("../utils/constants").DATE_FIELDS;
+
 const Consignment = require("../models/consignmentModel");
 const middleware = require("../utils/middleware");
 const moment = require("moment");
@@ -128,15 +130,15 @@ router.put("/edit/:id", middleware.verifyToken, (req, res) => {
   try {
     const obj = req.body.obj;
     if (obj.On_Board_Date && obj.Discharge_Date) {
-      const onBoardDate = moment(obj.On_Board_Date).format("MM DD YYYY");
-      const dischargeDate = moment(obj.Discharge_Date).format("MM DD YYYY");
+      const onBoardDate = moment(obj.On_Board_Date).format("MM/DD/YYYY");
+      const dischargeDate = moment(obj.Discharge_Date).format("MM/DD/YYYY");
       const sailingTime = moment(dischargeDate).diff(onBoardDate, "days");
       obj.Sailing_Time = sailingTime;
     }
     if (obj.Invoice_Paid_Date && obj.Invoice_Date) {
-      const invoiceDate = moment(obj.Invoice_Date).format("MM DD YYYY");
+      const invoiceDate = moment(obj.Invoice_Date).format("MM/DD/YYYY");
       const invoicePaidDate = moment(obj.Invoice_Paid_Date).format(
-        "MM DD YYYY"
+        "MM/DD/YYYY"
       );
       const paymentDuration = moment(invoicePaidDate).diff(invoiceDate, "days");
       obj.Payment_Duration = paymentDuration;
@@ -200,6 +202,12 @@ router.post("/add", middleware.verifyToken, (req, res) => {
         });
       } else {
         if (foundConsignment.length == 0) {
+          Object.keys(obj).forEach((value) => {
+            if (dateFields.indexOf(value) > -1) {
+              if (obj[value])
+                obj[value] = moment(obj[value]).format("MM/DD/YYYY");
+            }
+          });
           Consignment.create(obj, (err) => {
             if (err) {
               logger.log({
