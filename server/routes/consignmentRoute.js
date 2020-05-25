@@ -143,6 +143,11 @@ router.put("/edit/:id", middleware.verifyToken, (req, res) => {
       const paymentDuration = moment(invoicePaidDate).diff(invoiceDate, "days");
       obj.Payment_Duration = paymentDuration;
     }
+    Object.keys(obj).forEach((value) => {
+      if (dateFields.indexOf(value) > -1) {
+        if (obj[value]) obj[value] = moment(obj[value]).format("MM/DD/YYYY");
+      }
+    });
     Consignment.findByIdAndUpdate(req.params.id, obj, (err) => {
       if (err) {
         logger.log({
