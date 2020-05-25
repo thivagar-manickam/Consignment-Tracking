@@ -346,21 +346,6 @@
                   <mat-form-field class="inputField">
                     <input
                       matInput
-                      [matDatepicker]="EtaDatePicker"
-                      placeholder="ETA"
-                      formControlName="ETA"
-                      [matDatepickerFilter]="etaDateFilter"
-                      (dateChange)="setStartDate()"
-                    />
-                    <mat-datepicker-toggle
-                      matSuffix
-                      [for]="EtaDatePicker"
-                    ></mat-datepicker-toggle>
-                    <mat-datepicker touchUi #EtaDatePicker></mat-datepicker>
-                  </mat-form-field>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
                       type="text"
                       formControlName="Place_Of_Delivery"
                       placeholder="Place of Delivery"
@@ -379,6 +364,21 @@
                       [for]="onBoardDatePicker"
                     ></mat-datepicker-toggle>
                     <mat-datepicker touchUi #onBoardDatePicker></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="inputField">
+                    <input
+                      matInput
+                      [matDatepicker]="EtaDatePicker"
+                      placeholder="ETA"
+                      formControlName="ETA"
+                      [matDatepickerFilter]="etaDateFilter"
+                      (dateChange)="setStartDate()"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="EtaDatePicker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #EtaDatePicker></mat-datepicker>
                   </mat-form-field>
                   <mat-form-field class="inputField">
                     <input
