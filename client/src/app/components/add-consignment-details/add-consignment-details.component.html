@@ -183,6 +183,7 @@
                     type="number"
                     formControlName="Advance_To_Be_Paid"
                     placeholder="Advance to be paid"
+                    (blur)="onAdvancePaidBlur($event)"
                   />
                 </mat-form-field>
                 <mat-form-field class="inputField">
@@ -227,6 +228,7 @@
                     type="number"
                     formControlName="Invoice_Value"
                     placeholder="Invoice Value"
+                    (blur)="onInvoiceValueBlur($event)"
                   />
                 </mat-form-field>
                 <mat-form-field class="inputField">
@@ -347,6 +349,8 @@
                       [matDatepicker]="EtaDatePicker"
                       placeholder="ETA"
                       formControlName="ETA"
+                      [matDatepickerFilter]="etaDateFilter"
+                      (dateChange)="setStartDate()"
                     />
                     <mat-datepicker-toggle
                       matSuffix
@@ -368,6 +372,7 @@
                       [matDatepicker]="onBoardDatePicker"
                       formControlName="On_Board_Date"
                       placeholder="On Board Date"
+                      (dateChange)="setStartDate()"
                     />
                     <mat-datepicker-toggle
                       matSuffix
@@ -381,6 +386,7 @@
                       [matDatepicker]="dischargeDatePicker"
                       placeholder="Discharge Date"
                       formControlName="Discharge_Date"
+                      [matDatepickerFilter]="dischargeDateFilter"
                     />
                     <mat-datepicker-toggle
                       matSuffix

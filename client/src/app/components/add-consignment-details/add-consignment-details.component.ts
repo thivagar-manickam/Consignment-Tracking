@@ -43,6 +43,8 @@ export class AddConsignmentDetailsComponent implements OnInit {
 
   screenTitle = "Add New Consignment";
   errorMessage = "";
+  dischargeDateFilter;
+  etaDateFilter;
   isNewConsignment = true;
   userDetails;
   consignmentDetail;
@@ -98,6 +100,60 @@ export class AddConsignmentDetailsComponent implements OnInit {
     private spinnerService: NgxSpinnerService
   ) {}
 
+  onAdvancePaidBlur = (event) => {
+    if (event.target.valueAsNumber) {
+      const advance = event.target.valueAsNumber;
+      const invoiceValue = this.contractForm.controls["Invoice_Value"].value;
+      const totalValue =
+        this.contractForm.controls["Price"].value *
+        this.contractForm.controls["Contract_Quantity_MT"].value;
+      if (advance > invoiceValue) {
+        this.contractForm.controls["Advance_To_Be_Paid"].setValidators(
+          Validators.max(invoiceValue)
+        );
+        this.contractForm.controls[
+          "Advance_To_Be_Paid"
+        ].updateValueAndValidity();
+      } else if (advance > totalValue) {
+        this.contractForm.controls["Advance_To_Be_Paid"].setValidators(
+          Validators.max(totalValue)
+        );
+        this.contractForm.controls[
+          "Advance_To_Be_Paid"
+        ].updateValueAndValidity();
+      } else {
+        this.contractForm.controls["Advance_To_Be_Paid"].clearValidators();
+        this.contractForm.controls[
+          "Advance_To_Be_Paid"
+        ].updateValueAndValidity();
+      }
+    }
+  };
+  /**
+   * Method to check if the invoice value
+   * is lesser than or equal to the
+   * value of price * quantity
+   *
+   * @param event
+   * @returns void
+   */
+  onInvoiceValueBlur = (event) => {
+    if (event.target.valueAsNumber) {
+      const invoiceValue = event.target.valueAsNumber;
+      const totalValue =
+        this.contractForm.controls["Price"].value *
+        this.contractForm.controls["Contract_Quantity_MT"].value;
+      if (invoiceValue < totalValue) {
+        this.contractForm.controls["Invoice_Value"].clearValidators();
+        this.contractForm.controls["Invoice_Value"].updateValueAndValidity();
+      } else {
+        this.contractForm.controls["Invoice_Value"].setValidators(
+          Validators.max(totalValue)
+        );
+        this.contractForm.controls["Invoice_Value"].updateValueAndValidity();
+      }
+    }
+  };
   /**
    * This method will get the form
    * data and send it to the BE
@@ -217,6 +273,41 @@ export class AddConsignmentDetailsComponent implements OnInit {
     }
   };
 
+  setStartDate = () => {
+    if (this.contractForm.controls["ETA"].value) {
+      this.dischargeDateFilter = (d: Date | null): boolean => {
+        const day = d || new Date();
+        const etaDate = new Date(this.contractForm.controls["ETA"].value);
+        // Prevent Saturday and Sunday from being selected.
+        return day > etaDate;
+      };
+    } else {
+      this.dischargeDateFilter = (d: Date | null): boolean => {
+        const day = d || new Date();
+        const currentDate = new Date();
+        // Prevent Saturday and Sunday from being selected.
+        return true;
+      };
+    }
+    if (this.contractForm.controls["On_Board_Date"].value) {
+      this.etaDateFilter = (d: Date | null): boolean => {
+        const day = d || new Date();
+        const onBoardDate = new Date(
+          this.contractForm.controls["On_Board_Date"].value
+        );
+        // Prevent Saturday and Sunday from being selected.
+        return day > onBoardDate;
+      };
+    } else {
+      this.etaDateFilter = (d: Date | null): boolean => {
+        const day = d || new Date();
+        const onBoardDate = new Date();
+        // Prevent Saturday and Sunday from being selected.
+        return true;
+      };
+    }
+  };
+
   /**
    * This method will set the
    * form values on retrieving the
@@ -283,6 +374,7 @@ export class AddConsignmentDetailsComponent implements OnInit {
         On_Board_Date: new Date(consignmentDetails["On_Board_Date"]),
       });
     }
+    this.setStartDate();
   };
 
   /**
