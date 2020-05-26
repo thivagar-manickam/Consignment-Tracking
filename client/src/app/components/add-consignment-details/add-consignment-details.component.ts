@@ -328,7 +328,6 @@ export class AddConsignmentDetailsComponent implements OnInit {
       Origin: consignmentDetails["Origin"],
       Payment_Terms: consignmentDetails["Payment_Terms"],
       Advance_To_Be_Paid: consignmentDetails["Advance_To_Be_Paid"],
-      Advance_Paid_Date: consignmentDetails["Advance_Paid_Date"],
       Contract_Quantity_MT: consignmentDetails["Contract_Quantity_MT"],
       Invoice_Number: consignmentDetails["Invoice_Number"],
       Invoice_Value: consignmentDetails["Invoice_Value"],
@@ -344,6 +343,11 @@ export class AddConsignmentDetailsComponent implements OnInit {
       Place_Of_Delivery: consignmentDetails["Place_Of_Delivery"],
       Sailing_Time: consignmentDetails["Sailing_Time"],
     });
+    if (consignmentDetails["Advance_Paid_Date"]) {
+      this.contractForm.patchValue({
+        Advance_Paid_Date: new Date(consignmentDetails["Advance_Paid_Date"]),
+      });
+    }
     if (consignmentDetails["Invoice_Date"]) {
       this.contractForm.patchValue({
         Invoice_Date: new Date(consignmentDetails["Invoice_Date"]),
