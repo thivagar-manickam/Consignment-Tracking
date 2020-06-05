@@ -201,7 +201,30 @@ export class AddConsignmentDetailsComponent implements OnInit {
         }
         this.spinnerService.hide();
       });
+    } else {
+      const title = "Error";
+      const message = "Please check all the entered values for error";
+      this.showErrorMessage(title, message);
     }
+  };
+
+  /**
+   * This method will show a error
+   * message when there is any error
+   * while trying to save the data
+   *
+   * @param title
+   * @param message
+   * @void void
+   */
+  showErrorMessage = (title, message) => {
+    Swal.fire({
+      title: title,
+      text: message,
+      icon: "error",
+      confirmButtonText: "Ok",
+      allowOutsideClick: false,
+    });
   };
 
   /**
