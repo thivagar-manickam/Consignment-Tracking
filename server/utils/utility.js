@@ -90,6 +90,7 @@ const authenticateUser = (userId, token, res) => {
             token,
             userId: user._id,
             isUserAuthenticated,
+            username: user.username,
           };
           res.send({ success: true, statusCode: 200, data });
         } else {

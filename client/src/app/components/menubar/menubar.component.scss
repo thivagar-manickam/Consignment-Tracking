@@ -1,7 +1,13 @@
 .logout-spacer {
   margin: auto 0px auto auto;
+  .user-name {
+    padding-right: 30px;
+  }
 }
 
 .mat-toolbar {
-  position: relative;
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
 }

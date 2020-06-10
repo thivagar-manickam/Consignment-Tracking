@@ -1,6 +1,5 @@
 <app-menubar></app-menubar>
 <div id="main-container">
-  <h3>{{ screenTitle }}</h3>
   <div class="error-block" color="danger" *ngIf="errorMessage">
     {{ errorMessage }}
   </div>
@@ -12,341 +11,188 @@
   >
     <p class="spinner-text">{{ spinnerMessage }}</p>
   </ngx-spinner>
-  <div id="consigment-number-container" *ngIf="!isNewConsignment">
-    <form
-      [formGroup]="consignmentNumberForm"
-      (ngSubmit)="onRetrieveDetail(consignmentNumberForm)"
-    >
-      <mat-form-field>
-        <input
-          matInput
-          type="text"
-          autocomplete="off"
-          autofocus
-          formControlName="consignmentNumber"
-          placeholder="Consignment Number"
-          required
-        />
+  <mat-card>
+    <mat-card-title>Consignment Overview</mat-card-title>
+    <div>
+      <mat-form-field id="filterField">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter" />
       </mat-form-field>
-      <button mat-raised-button color="primary" class="button" type="submit">
-        Retrieve Details
-      </button>
-    </form>
-  </div>
-  <div id="data-entry-container">
-    <mat-card>
-      <mat-card-content>
-        <form
-          [formGroup]="contractForm"
-          (ngSubmit)="onFormSubmit(contractForm)"
-          id="contract-form"
+    </div>
+    <div class="table-container">
+      <table
+        mat-table
+        matSort
+        [dataSource]="consignmentTableSource"
+        multiTemplateDataRows
+        class="mat-elevation-z8"
+        matSortActive="Business_Date"
+        matSortDisableClear
+        matSortDirection="asc"
+      >
+        <ng-container
+          matColumnDef="{{ column }}"
+          *ngFor="let column of columnsToDisplay"
         >
-          <mat-tab-group dynamicHeight>
-            <mat-tab label="Contract Details">
-              <div>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    type="text"
-                    autocomplete="off"
-                    formControlName="Contract Number"
-                    placeholder="Contract Number"
-                    required
-                  />
-                </mat-form-field>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    [matDatepicker]="contractDatePicker"
-                    formControlName="Contract Date"
-                    placeholder="Contract date"
-                    required
-                  />
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="contractDatePicker"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #contractDatePicker></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    [matDatepicker]="businessDatePicker"
-                    placeholder="Business date"
-                    formControlName="Business Date"
-                    required
-                  />
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="businessDatePicker"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #businessDatePicker></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    type="text"
-                    placeholder="Company Name"
-                    formControlName="Company Name"
-                    required
-                  />
-                </mat-form-field>
-              </div>
-              <div>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    type="text"
-                    placeholder="Material"
-                    formControlName="Material"
-                    required
-                  />
-                </mat-form-field>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    type="number"
-                    formControlName="Price"
-                    placeholder="Price"
-                    required
-                  />
-                </mat-form-field>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    type="number"
-                    formControlName="Quantity"
-                    placeholder="Quantity"
-                    required
-                  />
-                </mat-form-field>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    type="text"
-                    formControlName="Payment Terms"
-                    placeholder="Payment Terms"
-                    required
-                  />
-                </mat-form-field>
-              </div>
-              <div>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    type="number"
-                    formControlName="Advance To Be Paid"
-                    placeholder="Advance to be paid"
-                  />
-                </mat-form-field>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    [matDatepicker]="advanceDatePicker"
-                    formControlName="Advance Paid Date"
-                    placeholder="Advance paid date"
-                  />
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="advanceDatePicker"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #advanceDatePicker></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    type="number"
-                    formControlName="Contract Quantity (MT)"
-                    placeholder="Contract Quantity"
-                    required
-                  />
-                </mat-form-field>
-              </div>
-            </mat-tab>
-            <mat-tab label="Invoice Details">
-              <div>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    [matDatepicker]="invoiceDatePicker"
-                    formControlName="Invoice Date"
-                    placeholder="Invoice date"
-                  />
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="invoiceDatePicker"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker touchUi #invoiceDatePicker></mat-datepicker>
-                </mat-form-field>
-              </div>
-              <div>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    type="text"
-                    formControlName="Invoice Number"
-                    placeholder="Invoice Number"
-                  />
-                </mat-form-field>
-              </div>
-              <div>
-                <mat-form-field class="inputField">
-                  <input
-                    matInput
-                    type="number"
-                    formControlName="Invoice Price"
-                    placeholder="Invoice Value"
-                  />
-                </mat-form-field>
-              </div>
-            </mat-tab>
-            <mat-tab label="Shipment Details">
-              <div id="shipping-tab">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>
+            {{ replaceUnderScore(column) }}
+          </th>
+          <td mat-cell *matCellDef="let data">{{ data[column] }}</td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td
+            mat-cell
+            *matCellDef="let data"
+            [attr.colspan]="columnsToDisplay.length"
+          >
+            <div
+              class="consignment-detail"
+              [@detailExpand]="
+                data == consignmentData ? 'expanded' : 'collapsed'
+              "
+            >
+              <div class="consignment-description">
                 <div>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      type="number"
-                      formControlName="Shipped Quantity (MT)"
-                      placeholder="Shipping Quantity"
-                      required
-                    />
-                  </mat-form-field>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      type="number"
-                      formControlName="Containers"
-                      placeholder="Number of Containers"
-                      required
-                    />
-                  </mat-form-field>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      type="text"
-                      formControlName="Container Numbers"
-                      placeholder="Container numbers"
-                    />
-                  </mat-form-field>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      type="text"
-                      formControlName="Loading Port"
-                      placeholder="Loading Port"
-                    />
-                  </mat-form-field>
+                  <b>Additional Details:</b>
                 </div>
                 <div>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      [matDatepicker]="OBLDatePicker"
-                      placeholder="OBL Date"
-                      formControlName="OB/L Date"
-                    />
-                    <mat-datepicker-toggle
-                      matSuffix
-                      [for]="OBLDatePicker"
-                    ></mat-datepicker-toggle>
-                    <mat-datepicker touchUi #OBLDatePicker></mat-datepicker>
-                  </mat-form-field>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      type="text"
-                      formControlName="B/L Number"
-                      placeholder="OBL Number"
-                    />
-                  </mat-form-field>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      type="text"
-                      formControlName="PSIC Courier Details"
-                      placeholder="PSIC Details"
-                    />
-                  </mat-form-field>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      type="text"
-                      formControlName="DHL / Delivery Date"
-                      placeholder="DHL"
-                    />
-                  </mat-form-field>
-                </div>
-                <div>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      type="text"
-                      placeholder="Shipping Line"
-                      formControlName="Shipping Line"
-                      requried
-                    />
-                  </mat-form-field>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      type="text"
-                      formControlName="ETA"
-                      placeholder="ETA"
-                      required
-                    />
-                  </mat-form-field>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      type="text"
-                      formControlName="Place Of Delivery"
-                      placeholder="Place of Delivery"
-                      required
-                    />
-                  </mat-form-field>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      [matDatepicker]="dischargeDatePicker"
-                      placeholder="Discharge Date"
-                      formControlName="Discharge Date"
-                    />
-                    <mat-datepicker-toggle
-                      matSuffix
-                      [for]="dischargeDatePicker"
-                    ></mat-datepicker-toggle>
-                    <mat-datepicker
-                      touchUi
-                      #dischargeDatePicker
-                    ></mat-datepicker>
-                  </mat-form-field>
-                  <mat-form-field class="inputField">
-                    <input
-                      matInput
-                      type="text"
-                      formControlName="Sailing Time"
-                      placeholder="Sailing time"
-                      required
-                    />
-                  </mat-form-field>
-                  <button
-                    mat-raised-button
-                    color="primary"
-                    type="submit"
-                    class="buttons"
-                  >
-                    Save
-                  </button>
-                  <button mat-raised-button color="warn" class="buttons">
-                    Cancel
-                  </button>
+                  <div class="mainGroup">
+                    <div class="consignmentField" *ngIf="data.Contract_Date">
+                      <b>Contract Date:</b>
+                      {{ data.Contract_Date | date: "MM/dd/yyyy" }}
+                    </div>
+                    <div class="consignmentField" *ngIf="data.Month">
+                      <b>Month:</b> {{ data.Month }}
+                    </div>
+                    <div class="consignmentField" *ngIf="data.On_Board_Date">
+                      <b>On Board Date:</b>
+                      {{ data.On_Board_Date | date: "MM/dd/yyyy" }}
+                    </div>
+                    <div class="consignmentField" *ngIf="data.Payment_Terms">
+                      <b>Payment Terms:</b> {{ data.Payment_Terms }}
+                    </div>
+                  </div>
+                  <div class="mainGroup">
+                    <div
+                      class="consignmentField"
+                      *ngIf="data.Advance_To_Be_Paid"
+                    >
+                      <b>Advance To Be Paid:</b>
+                      {{ data.Advance_To_Be_Paid }} USD
+                    </div>
+                    <div
+                      class="consignmentField"
+                      *ngIf="data.Advance_Paid_Date"
+                    >
+                      <b>Advance Paid Date:</b>
+                      {{ data.Advance_Paid_Date | date: "MM/dd/yyyy" }}
+                    </div>
+                    <div
+                      class="consignmentField"
+                      *ngIf="data.Contract_Quantity_MT"
+                    >
+                      <b>Contract Quantity:</b>
+                      {{ data.Contract_Quantity_MT }} MT
+                    </div>
+                    <div class="consignmentField" *ngIf="data.Invoice_Date">
+                      <b>Invoice Date:</b>
+                      {{ data.Invoice_Date | date: "MM/dd/yyyy" }}
+                    </div>
+                  </div>
+                  <div class="mainGroup">
+                    <div class="consignmentField" *ngIf="data.Invoice_Number">
+                      <b>Invoice Number:</b> {{ data.Invoice_Number }}
+                    </div>
+                    <div class="consignmentField" *ngIf="data.Invoice_Value">
+                      <b>Invoice Value:</b> {{ data.Invoice_Value }} USD
+                    </div>
+                    <div class="consignmentField" *ngIf="data.Payment_Duration">
+                      <b>Payment Duration:</b> {{ data.Payment_Duration }} days
+                    </div>
+                    <div
+                      class="consignmentField"
+                      *ngIf="data.Shipped_Quantity_MT"
+                    >
+                      <b>Shipped Quantity:</b> {{ data.Shipped_Quantity_MT }} MT
+                    </div>
+                  </div>
+                  <div class="mainGroup">
+                    <div class="consignmentField" *ngIf="data.Containers">
+                      <b>Containers:</b> {{ data.Containers }}
+                    </div>
+                    <div
+                      class="consignmentField"
+                      *ngIf="data.Container_Numbers"
+                    >
+                      <b>Container Numbers:</b> {{ data.Container_Numbers }}
+                    </div>
+                    <div class="consignmentField" *ngIf="data.OB_L_Date">
+                      <b>OB/L Date:</b>
+                      {{ data.OB_L_Date | date: "MM/dd/yyyy" }}
+                    </div>
+                    <div class="consignmentField" *ngIf="data.B_L_Number">
+                      <b>B/L Number:</b> {{ data.B_L_Number }}
+                    </div>
+                  </div>
+                  <div class="mainGroup">
+                    <div class="consignmentField" *ngIf="data.Loading_Port">
+                      <b>Loading Port:</b> {{ data.Loading_Port }}
+                    </div>
+                    <div class="consignmentField" *ngIf="data.Shipping_Line">
+                      <b>Shipping Line:</b> {{ data.Shipping_Line }}
+                    </div>
+                    <div class="consignmentField" *ngIf="data.ETA">
+                      <b>ETA:</b> {{ data.ETA | date: "MM/dd/yyyy" }}
+                    </div>
+                    <div class="consignmentField" *ngIf="data.Discharge_Date">
+                      <b>Discharge Date:</b>
+                      {{ data.Discharge_Date | date: "MM/dd/yyyy" }}
+                    </div>
+                  </div>
+                  <div class="mainGroup">
+                    <div
+                      class="consignmentField"
+                      *ngIf="data.Place_Of_Delivery"
+                    >
+                      <b>Place Of Delivery:</b> {{ data.Place_Of_Delivery }}
+                    </div>
+                    <div
+                      class="consignmentField"
+                      *ngIf="data.PSIC_Courier_Details"
+                    >
+                      <b>PSIC Courier Details:</b>
+                      {{ data.PSIC_Courier_Details }}
+                    </div>
+                    <div class="consignmentField" *ngIf="data.DHL_Details">
+                      <b>DHL Details:</b> {{ data.DHL_Details }}
+                    </div>
+                    <div class="consignmentField" *ngIf="data.Sailing_Time">
+                      <b>Sailing Time:</b> {{ data.Sailing_Time }} days
+                    </div>
+                  </div>
                 </div>
               </div>
-            </mat-tab>
-          </mat-tab-group>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr
+          mat-row
+          *matRowDef="let data; columns: columnsToDisplay"
+          class="consignment-row"
+          [class.consignment-expanded-row]="consignmentData === data"
+          (click)="consignmentData = consignmentData === data ? null : data"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: ['expandedDetail']"
+          class="consignment-detail-row"
+        ></tr>
+      </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+  </mat-card>
 </div>

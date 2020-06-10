@@ -9,7 +9,10 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatSelectModule,
-  MatTabsModule
+  MatTabsModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
 } from "@angular/material";
 import { NgModule } from "@angular/core";
 
@@ -25,7 +28,10 @@ import { NgModule } from "@angular/core";
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   exports: [
     MatInputModule,
@@ -38,7 +44,10 @@ import { NgModule } from "@angular/core";
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatTabsModule
-  ]
+    MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+  ],
 })
 export class MaterialModule {}

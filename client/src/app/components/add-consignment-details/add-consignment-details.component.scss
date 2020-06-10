@@ -1,0 +1,34 @@
+#main-container {
+  margin: auto auto auto auto;
+  text-align: center;
+  width: 80%;
+
+  #consigment-number-container {
+    text-align: left;
+  }
+  .button {
+    margin: auto auto auto 5%;
+  }
+}
+#data-entry-container {
+  width: 100%;
+  text-align: left;
+  #contract-form {
+    margin-top: 10px;
+    #shipping-tab {
+      margin-top: 5px;
+      .inputField {
+        width: 20%;
+        margin: 5px 3% auto 2%;
+      }
+    }
+    .inputField {
+      width: 20%;
+      margin: 2% 3% auto 2%;
+    }
+  }
+}
+.buttons {
+  float: right;
+  margin: 30px auto auto 10px;
+}

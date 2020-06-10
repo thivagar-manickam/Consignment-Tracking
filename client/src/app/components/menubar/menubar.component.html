@@ -1,15 +1,21 @@
 <mat-toolbar color="primary">
   <span
     ><a routerLink="/consignment" routerLinkActive="active" mat-button
+      >Consignment Overview</a
+    ></span
+  >
+  <span
+    ><a routerLink="/consignment/add" routerLinkActive="active" mat-button
       >Add Consignment</a
     ></span
   >
   <span
     ><a routerLink="/consignment/retrieve" routerLinkActive="active" mat-button
-      >Retrieve Consignment Details</a
+      >Update Consignment Details</a
     ></span
   >
   <div class="logout-spacer">
+    <span class="user-name">Welcome, {{ this.userName }}</span>
     <button mat-raised-button (click)="onLogoutClick()">
       Logout
     </button>

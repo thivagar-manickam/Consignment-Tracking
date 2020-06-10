@@ -3,12 +3,7 @@ import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 import { AuthenticationService } from "../../services/authentication/authentication.service";
-import {
-  USER_NAME,
-  PASSWORD,
-  LOGIN_ERROR_MESSAGE,
-  CONSIGNMENT,
-} from "../../utils/constants.js";
+import { LOGIN_ERROR_MESSAGE, CONSIGNMENT } from "../../utils/constants.js";
 
 @Component({
   selector: "app-login",

@@ -1,34 +1,60 @@
 #main-container {
-  margin: auto auto auto auto;
-  text-align: center;
-  width: 80%;
+  margin: 15px auto auto auto;
+  width: 95%;
+}
 
-  #consigment-number-container {
-    text-align: left;
-  }
-  .button {
-    margin: auto auto auto 5%;
+.mat-card-title {
+  text-align: center;
+}
+.table-container {
+  margin: 15px auto;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+tr.consignment-detail-row {
+  height: 0;
+}
+
+tr.consignment-row:not(.consignment-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.consignment-row:not(.consignment-expanded-row):active {
+  background: #efefef;
+}
+
+.consignment-row td {
+  border-bottom-width: 0;
+}
+
+.consignment-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.consignment-description {
+  width: 100%;
+  height: 270px;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 2%;
+  text-align: left;
+  .mainGroup {
+    margin: 0px 0px 10px 0px;
+    .consignmentField {
+      width: 23%;
+      float: left;
+      margin: 2% 1% auto 1%;
+    }
   }
 }
-#data-entry-container {
-  width: 100%;
-  text-align: left;
-  #contract-form {
-    margin-top: 10px;
-    #shipping-tab {
-      margin-top: 5px;
-      .inputField {
-        width: 20%;
-        margin: 5px 3% auto 2%;
-      }
-      .buttons {
-        float: right;
-        margin: 15px auto auto 10px;
-      }
-    }
-    .inputField {
-      width: 20%;
-      margin: 2% 3% auto 2%;
-    }
-  }
+
+#filterField {
+  font-size: 14px;
+  margin: 0px 2% auto 1%;
+  width: 30%;
 }

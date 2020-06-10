@@ -7,9 +7,10 @@ import {
   URL,
   OBJ,
   TOKEN,
-  CONSIGNMENT_GET_URL,
+  CONSIGNMENT_RETRIEVE_URL,
   CONSIGNMENT_PUT_URL,
   CONSIGNMENT_POST_URL,
+  CONSIGNMENT_GET_URL,
 } from "../../utils/constants.js";
 
 @Injectable({
@@ -55,12 +56,10 @@ export class ConsignmentService {
    */
   onRetrieveConsignmentDetail(data, isAddToken): Observable<any> {
     let request = {};
-    request[
-      URL
-    ] = `${BASE_URL}/${CONSIGNMENT_GET_URL}/${data.obj.consignmentNumber}`;
-    request[OBJ] = data.userId;
+    request[URL] = `${BASE_URL}/${CONSIGNMENT_RETRIEVE_URL}`;
+    request[OBJ] = data.obj;
     request[TOKEN] = data.token;
-    return this._apiService.getData(request, isAddToken);
+    return this._apiService.postData(request, isAddToken);
   }
 
   /**
@@ -89,5 +88,20 @@ export class ConsignmentService {
     request[TOKEN] = query.token;
     request[OBJ] = query.obj;
     return this._apiService.postData(request, isAddToken);
+  }
+
+  /**
+   * This method will retrieve
+   * all the consigment details in the
+   * data base
+   * @param query
+   * @param isAddToken
+   */
+  retrieveAllConsignmentDetails(query, isAddToken): Observable<any> {
+    let request = {};
+    request[URL] = `${BASE_URL}/${CONSIGNMENT_GET_URL}`;
+    request[TOKEN] = query.token;
+    request[OBJ] = query.userId;
+    return this._apiService.getData(request, isAddToken);
   }
 }
