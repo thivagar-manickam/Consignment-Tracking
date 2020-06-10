@@ -69,7 +69,11 @@
                   <mat-datepicker touchUi #contractDatePicker></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field class="inputField">
-                  <mat-select placeholder="Status" formControlName="Status">
+                  <mat-select
+                    placeholder="Status"
+                    formControlName="Status"
+                    [disabled]="isNewConsignment"
+                  >
                     <mat-option
                       *ngFor="let status of statusValues"
                       [value]="status"

@@ -61,7 +61,7 @@ export class AddConsignmentDetailsComponent implements OnInit {
     Business_Date: [new Date(), Validators.required],
     Company_Name: ["", Validators.required],
     Month: [""],
-    Status: ["", Validators.required],
+    Status: [this.statusValues[0], Validators.required],
     Material: ["", Validators.required],
     Price: [, Validators.required],
     Origin: ["", Validators.required],
