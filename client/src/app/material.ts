@@ -13,6 +13,9 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
+  MatBadgeModule,
+  MatBottomSheetModule,
+  MatListModule,
 } from "@angular/material";
 import { NgModule } from "@angular/core";
 
@@ -32,6 +35,9 @@ import { NgModule } from "@angular/core";
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatBadgeModule,
+    MatBottomSheetModule,
+    MatListModule,
   ],
   exports: [
     MatInputModule,
@@ -48,6 +54,9 @@ import { NgModule } from "@angular/core";
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatBadgeModule,
+    MatBottomSheetModule,
+    MatListModule,
   ],
 })
 export class MaterialModule {}

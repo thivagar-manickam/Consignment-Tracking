@@ -15,7 +15,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { MaterialModule } from "./material";
 import { MenubarComponent } from "./components/menubar/menubar.component";
-import { ConsignmentDetailsComponent } from './components/consignment-details/consignment-details.component';
+import { ConsignmentDetailsComponent } from "./components/consignment-details/consignment-details.component";
+import { NotificationComponent } from "./components/notification/notification.component";
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ConsignmentDetailsComponent } from './components/consignment-details/co
     RegistrationComponent,
     MenubarComponent,
     ConsignmentDetailsComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +37,7 @@ import { ConsignmentDetailsComponent } from './components/consignment-details/co
     MaterialModule,
     NgxSpinnerModule,
   ],
+  entryComponents: [NotificationComponent],
   providers: [],
   bootstrap: [AppComponent],
 })

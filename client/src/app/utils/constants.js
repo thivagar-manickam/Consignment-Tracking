@@ -58,3 +58,21 @@ export const DATE_FIELDS = [
   "Discharge_Date",
   "On_Board_Date",
 ];
+
+export const NOTIFICATION_DATA = [
+  {
+    status: "To be loaded",
+    contractNumber: "4019/2020",
+    dueDate: "23/12/2020",
+  },
+  {
+    status: "Documents Pending",
+    contractNumber: "4023/2020",
+    dueDate: "01/06/2020",
+  },
+  {
+    status: "Payment due",
+    contractNumber: "4028/2020",
+    dueDate: "04/08/2020",
+  },
+];

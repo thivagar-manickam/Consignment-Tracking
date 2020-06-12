@@ -16,6 +16,19 @@
   >
   <div class="logout-spacer">
     <span class="user-name">Welcome, {{ this.userName }}</span>
+    <button
+      mat-button
+      color="primary"
+      id="notification_button"
+      (click)="openNotification()"
+    >
+      <mat-icon
+        [matBadge]="notificationData.length"
+        matBadgeColor="warn"
+        id="notification_bell"
+        >notifications</mat-icon
+      >
+    </button>
     <button mat-raised-button (click)="onLogoutClick()">
       Logout
     </button>

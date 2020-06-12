@@ -9,6 +9,9 @@
 .table-container {
   margin: 15px auto;
   width: 100%;
+  position: relative;
+  max-height: 310px;
+  overflow: auto;
 }
 
 table {

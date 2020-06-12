@@ -1,10 +1,15 @@
 .logout-spacer {
   margin: auto 0px auto auto;
   .user-name {
-    padding-right: 30px;
+    padding-right: 0.8rem;
+  }
+  #notification_button {
+    padding-right: 3rem;
+    #notification_bell {
+      color: white;
+    }
   }
 }
-
 .mat-toolbar {
   position: sticky;
   position: -webkit-sticky; /* For macOS/iOS Safari */
