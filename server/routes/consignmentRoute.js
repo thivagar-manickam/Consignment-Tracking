@@ -63,6 +63,40 @@ router.get("/", middleware.verifyToken, (req, res) => {
     });
   }
 });
+
+router.get("/search/:searchTerm", middleware.verifyToken, (req, res) => {
+  try {
+    const searchTerm = `/${req.params.searchTerm}/i`;
+    Consignment.find(
+      { Contract_Number: { $regex: req.params.searchTerm, $options: "i" } },
+      { Contract_Number: 1, _id: 0 },
+      (err, foundContract) => {
+        if (err) {
+          logger.log({
+            level: ERROR,
+            message: `Error in retrieving the contract numbers based on the search term`,
+          });
+        } else {
+          logger.log({
+            level: INFO,
+            message: `Retrieved the contract numbers based on the search term`,
+          });
+          res.send({
+            success: true,
+            statusCode: 200,
+            data: foundContract,
+          });
+        }
+      }
+    );
+  } catch (exception) {
+    logger.log({
+      level: ERROR,
+      message: `Exception while trying to fetch the consignment numbers based on the search key`,
+    });
+  }
+});
+
 router.post("/get", middleware.verifyToken, (req, res) => {
   logger.log({
     level: INFO,

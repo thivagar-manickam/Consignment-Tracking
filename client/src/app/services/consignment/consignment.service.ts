@@ -11,6 +11,7 @@ import {
   CONSIGNMENT_PUT_URL,
   CONSIGNMENT_POST_URL,
   CONSIGNMENT_GET_URL,
+  CONSIGNMENT_CONTRACT_GET_URL,
 } from "../../utils/constants.js";
 
 @Injectable({
@@ -100,6 +101,23 @@ export class ConsignmentService {
   retrieveAllConsignmentDetails(query, isAddToken): Observable<any> {
     let request = {};
     request[URL] = `${BASE_URL}/${CONSIGNMENT_GET_URL}`;
+    request[TOKEN] = query.token;
+    request[OBJ] = query.userId;
+    return this._apiService.getData(request, isAddToken);
+  }
+
+  /**
+   * This method will retrieve
+   * the contract numbers based on the
+   * search term
+   * @param query
+   * @param isAddToken
+   */
+  onRetrieveContractNumbers(query, isAddToken): Observable<any> {
+    let request = {};
+    request[
+      URL
+    ] = `${BASE_URL}/${CONSIGNMENT_CONTRACT_GET_URL}/${query.searchTerm}`;
     request[TOKEN] = query.token;
     request[OBJ] = query.userId;
     return this._apiService.getData(request, isAddToken);

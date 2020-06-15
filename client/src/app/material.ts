@@ -16,6 +16,7 @@ import {
   MatBadgeModule,
   MatBottomSheetModule,
   MatListModule,
+  MatAutocompleteModule,
 } from "@angular/material";
 import { NgModule } from "@angular/core";
 
@@ -38,6 +39,7 @@ import { NgModule } from "@angular/core";
     MatBadgeModule,
     MatBottomSheetModule,
     MatListModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatInputModule,
@@ -57,6 +59,7 @@ import { NgModule } from "@angular/core";
     MatBadgeModule,
     MatBottomSheetModule,
     MatListModule,
+    MatAutocompleteModule,
   ],
 })
 export class MaterialModule {}

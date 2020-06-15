@@ -19,6 +19,7 @@ export const MONTH = "Month";
 
 export const RETRIEVING_DATA = "Retrieving consignment details...";
 export const SAVING_CONSIGNMENT_DETAILS = "Saving the consignment details...";
+export const RETRIEVING_CONTRACT_NUMBERS = "Retrieving the contract numbers...";
 export const IS_ADD_TOKEN = true;
 export const BASE_URL = "http://localhost:4200/api";
 export const LOGIN_USER_URL = "login";
@@ -28,6 +29,7 @@ export const CONSIGNMENT_GET_URL = "/consignment";
 export const CONSIGNMENT_RETRIEVE_URL = "/consignment/get";
 export const CONSIGNMENT_PUT_URL = "/consignment/edit";
 export const CONSIGNMENT_POST_URL = "/consignment/add";
+export const CONSIGNMENT_CONTRACT_GET_URL = "/consignment/search";
 export const STATUS = [
   "To be Loaded",
   "Documents due",
