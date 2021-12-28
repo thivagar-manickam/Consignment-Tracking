@@ -19,6 +19,7 @@ export const MONTH = "Month";
 
 export const RETRIEVING_DATA = "Retrieving consignment details...";
 export const SAVING_CONSIGNMENT_DETAILS = "Saving the consignment details...";
+export const RETRIEVING_CONTRACT_NUMBERS = "Retrieving the contract numbers...";
 export const IS_ADD_TOKEN = true;
 export const BASE_URL = "http://localhost:4200/api";
 export const LOGIN_USER_URL = "login";
@@ -28,6 +29,7 @@ export const CONSIGNMENT_GET_URL = "/consignment";
 export const CONSIGNMENT_RETRIEVE_URL = "/consignment/get";
 export const CONSIGNMENT_PUT_URL = "/consignment/edit";
 export const CONSIGNMENT_POST_URL = "/consignment/add";
+export const CONSIGNMENT_CONTRACT_GET_URL = "/consignment/search";
 export const STATUS = [
   "To be Loaded",
   "Documents due",
@@ -57,4 +59,22 @@ export const DATE_FIELDS = [
   "ETA",
   "Discharge_Date",
   "On_Board_Date",
+];
+
+export const NOTIFICATION_DATA = [
+  {
+    status: "To be loaded",
+    contractNumber: "4019/2020",
+    dueDate: "23/12/2020",
+  },
+  {
+    status: "Documents Pending",
+    contractNumber: "4023/2020",
+    dueDate: "01/06/2020",
+  },
+  {
+    status: "Payment due",
+    contractNumber: "4028/2020",
+    dueDate: "04/08/2020",
+  },
 ];

@@ -1,13 +1,16 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { MatBottomSheet } from "@angular/material/bottom-sheet";
 
 import { AuthenticationService } from "../../services/authentication/authentication.service";
+import { NotificationComponent } from "../notification/notification.component";
 import {
   URL,
   BASE_URL,
   OBJ,
   LOGOUT_USER_URL,
   LOGIN_USER_URL,
+  NOTIFICATION_DATA,
 } from "../../utils/constants";
 
 @Component({
@@ -19,10 +22,16 @@ export class MenubarComponent implements OnInit {
   userDetails;
   userName;
   errorMessage = "";
+  notificationData = NOTIFICATION_DATA;
   constructor(
     private router: Router,
-    private _authenticationService: AuthenticationService
+    private _authenticationService: AuthenticationService,
+    private _bottomSheet: MatBottomSheet
   ) {}
+
+  openNotification(): void {
+    this._bottomSheet.open(NotificationComponent);
+  }
 
   onLogoutClick() {
     let request = {};

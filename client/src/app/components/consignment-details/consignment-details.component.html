@@ -178,7 +178,10 @@
           </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="columnsToDisplay; sticky: true"
+        ></tr>
         <tr
           mat-row
           *matRowDef="let data; columns: columnsToDisplay"

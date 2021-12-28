@@ -13,6 +13,10 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
+  MatBadgeModule,
+  MatBottomSheetModule,
+  MatListModule,
+  MatAutocompleteModule,
 } from "@angular/material";
 import { NgModule } from "@angular/core";
 
@@ -32,6 +36,10 @@ import { NgModule } from "@angular/core";
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatBadgeModule,
+    MatBottomSheetModule,
+    MatListModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatInputModule,
@@ -48,6 +56,10 @@ import { NgModule } from "@angular/core";
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatBadgeModule,
+    MatBottomSheetModule,
+    MatListModule,
+    MatAutocompleteModule,
   ],
 })
 export class MaterialModule {}

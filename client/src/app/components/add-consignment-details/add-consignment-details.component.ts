@@ -27,7 +27,10 @@ import {
   SAVING_CONSIGNMENT_DETAILS,
   STATUS,
   MONTH,
+  RETRIEVING_CONTRACT_NUMBERS,
 } from "../../utils/constants.js";
+import { Observable } from "rxjs";
+import { map, startWith } from "rxjs/operators";
 
 @Component({
   selector: "app-consignment-details",
@@ -50,6 +53,8 @@ export class AddConsignmentDetailsComponent implements OnInit {
   consignmentDetail;
   spinnerMessage;
   statusValues = STATUS;
+  contractNumbers = [];
+  filteredContract: Observable<string[]>;
 
   consignmentNumberForm = this.consignmentNumberFormBuilder.group({
     consignmentNumber: ["", Validators.required],
@@ -447,6 +452,52 @@ export class AddConsignmentDetailsComponent implements OnInit {
     });
   };
 
+  fetchConsignmentNumbers = () => {
+    this.consignmentNumberForm
+      .get("consignmentNumber")
+      .valueChanges.subscribe((value) => {
+        if (value.length === 3) {
+          let request = {};
+          request[TOKEN] = this.userDetails.token;
+          request[USER_ID] = this.userDetails.userId;
+          request["searchTerm"] = value;
+          this.spinnerMessage = RETRIEVING_CONTRACT_NUMBERS;
+          this.spinnerService.show();
+          let response = this._consignmentService.onRetrieveContractNumbers(
+            request,
+            IS_ADD_TOKEN
+          );
+          response.subscribe((res) => {
+            let responseValue = JSON.parse(JSON.stringify(res));
+            if (responseValue.success && responseValue.statusCode === 200) {
+              this.contractNumbers = [];
+              responseValue.data.forEach((value) => {
+                this.contractNumbers.push(value.Contract_Number);
+              });
+            }
+            this.spinnerService.hide();
+          });
+        }
+      });
+  };
+  /**
+   * This method will filter the
+   * consignment numbers from the array
+   * as we type through
+   *
+   * @param value
+   * @returns void
+   */
+  filterConsignmentNumber = (value) => {
+    if (value) {
+      const filterValue = value.consignmentNumber.toLowerCase();
+
+      return this.contractNumbers.filter((option) =>
+        option.toLowerCase().includes(filterValue)
+      );
+    }
+  };
+
   ngOnInit() {
     if (!this._authenticationService.getUserDetail().isUserAuthenticated) {
       this.router.navigateByUrl(LOGIN_USER_URL);
@@ -459,6 +510,11 @@ export class AddConsignmentDetailsComponent implements OnInit {
         this.screenTitle = EDIT_CONSIGNMENT_TITLE;
       }
       this.userDetails = this._authenticationService.getUserDetail();
+      this.filteredContract = this.consignmentNumberForm.valueChanges.pipe(
+        startWith(""),
+        map((value) => this.filterConsignmentNumber(value))
+      );
+      this.fetchConsignmentNumbers();
     }
   }
 }

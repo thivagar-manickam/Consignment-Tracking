@@ -1,0 +1,7 @@
+<mat-nav-list>
+  <a mat-list-item *ngFor="let data of notificationData">
+    <p mat-line>Status: {{ data.status }}</p>
+    <p mat-line>Contract No: {{ data.contractNumber }}</p>
+    <p mat-line>Due Date:{{ data.dueDate }}</p>
+  </a>
+</mat-nav-list>

@@ -32,27 +32,29 @@ middlewareObject.verifyToken = (req, res, next) => {
             message: `Error while fetching user data with id: ${userId} for token verification`,
           });
         } else {
-          if (user.isUserAuthenticated) {
-            const userToken = user.token;
-            if (token === userToken) {
-              next();
+          if (user.length != 0) {
+            if (user.isUserAuthenticated) {
+              const userToken = user.token;
+              if (token === userToken) {
+                next();
+              } else {
+                logger.log({
+                  level: INFO,
+                  message: `Invalid authorization token for userId: ${user.id}`,
+                });
+                res.send({
+                  statusCode: 401,
+                  success: false,
+                  message: "Invalid authorization token.Please login again",
+                });
+              }
             } else {
-              logger.log({
-                level: INFO,
-                message: `Invalid authorization token for userId: ${user.id}`,
-              });
               res.send({
                 statusCode: 401,
                 success: false,
-                message: "Invalid authorization token.Please login again",
+                message: "User not logged in. Please login",
               });
             }
-          } else {
-            res.send({
-              statusCode: 401,
-              success: false,
-              message: "User not logged in. Please login",
-            });
           }
         }
       });

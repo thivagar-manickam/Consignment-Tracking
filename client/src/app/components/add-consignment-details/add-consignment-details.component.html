@@ -21,12 +21,20 @@
         <input
           matInput
           type="text"
-          autocomplete="off"
           autofocus
           formControlName="consignmentNumber"
           placeholder="Contract Number"
+          [matAutocomplete]="consignmentNumber"
           required
         />
+        <mat-autocomplete #consignmentNumber="matAutocomplete">
+          <mat-option
+            *ngFor="let option of filteredContract | async"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
       <button mat-raised-button color="primary" class="button" type="submit">
         Retrieve and Update details
@@ -173,7 +181,7 @@
                 mat-raised-button
                 color="warn"
                 class="buttons"
-                type="reset"
+                type="reset" 
                 *ngIf="isNewConsignment"
               >
                 Cancel
@@ -426,6 +434,7 @@
           <button
             mat-raised-button
             color="warn"
+            type="reset"
             class="buttons"
             *ngIf="!isNewConsignment"
           >
